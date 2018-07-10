@@ -41,6 +41,9 @@
               <Radio label="暂不生效"></Radio>
             </RadioGroup>
         </Form-item>
+     <Form-item  label="备注"    >
+        <Input v-model="modalForm.Remark"  type="textarea"  :rows="2" maxlength="200" ></Input>
+      </Form-item>
     </Form>
     <div slot="footer">
       <Button type="ghost"  @click="cancel" >取消</Button>

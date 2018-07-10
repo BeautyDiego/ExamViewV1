@@ -53,7 +53,9 @@
       <Form-item  label="负责人电话" prop="OwenPhone"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string' }" >
         <Input v-model="modalForm.OwenPhone" ></Input>
       </Form-item>
-
+ <Form-item  label="备注"    >
+        <Input v-model="modalForm.Remark"  type="textarea"  :rows="2" maxlength="200" ></Input>
+      </Form-item>
     </Form>
     <div slot="footer">
       <Button type="ghost"  @click="cancel" >取消</Button>

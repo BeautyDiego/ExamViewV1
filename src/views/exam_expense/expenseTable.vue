@@ -109,6 +109,11 @@
                             }, text);
                         }
           },
+           {
+              align:'center',
+              title: '备注',
+              key: 'Remark',
+          },
           {
             title: '操作',
             align: 'center',
@@ -138,7 +143,7 @@
                   },
                   on: {
                       click: () => {
-                          this.delCar(params.row.Id)
+                          this.delExp(params.row.Id)
                       }
                   }
               }, '删除'));
@@ -182,6 +187,11 @@
                             }, text);
                         }
           },
+           {
+              align:'center',
+              title: '备注',
+              key: 'Remark',
+          },
           {
             title: '操作',
             align: 'center',
@@ -211,7 +221,7 @@
                   },
                   on: {
                       click: () => {
-                          this.delCar(params.row.Id)
+                          this.delExp(params.row.Id)
                       }
                   }
               }, '删除'));
@@ -266,6 +276,11 @@
                             }, text);
                         }
           },
+           {
+              align:'center',
+              title: '备注',
+              key: 'Remark',
+          },
           {
             title: '操作',
             align: 'center',
@@ -295,7 +310,7 @@
                   },
                   on: {
                       click: () => {
-                          this.delCar(params.row.Id)
+                          this.delExp(params.row.Id)
                       }
                   }
               }, '删除'));
@@ -385,9 +400,9 @@
       hideModel(){
         this.formShow=false;
       },
-      delUser(Id){
-          this.delId=Id;
-          this.delModal=true;
+      delExp(Id){
+        this.delId=Id;
+        this.delModal=true;
       },
       doChangeCusType(){
           this.currentPage=1;
@@ -400,7 +415,7 @@
       async comfirmDel(){
           this.btnLoading=true;
           try{
-              const res= await delUser({Id:this.delId});
+              const res= await delExamExpense({Id:this.delId});
               if (res.success) {
                   this.$Message.success('删除成功!');
                   this.getTableList();
