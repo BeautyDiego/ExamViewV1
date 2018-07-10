@@ -121,8 +121,8 @@ export const resetUserPwd = data => fetch('/Sys_Users/ResetPwd_Web_User', data, 
 // region 教练车
 export const getExamCarList = data => fetch('/Exam_Car/List_Exam_Car', data, 'POST');
 export const addExamCar = data => fetch('/Exam_Car/Add_Exam_Car', data, 'POST');
-export const editExamCarList = data => fetch('/Exam_Car/Edit_Exam_Car', data, 'POST');
-export const deleteExamCarList = data => fetch('/Exam_Car/Delete_Exam_Car', data, 'POST');
+export const editExamCar = data => fetch('/Exam_Car/Edit_Exam_Car', data, 'POST');
+export const deleteExamCar = data => fetch('/Exam_Car/Delete_Exam_Car', data, 'POST');
 //   endregion
 
 
