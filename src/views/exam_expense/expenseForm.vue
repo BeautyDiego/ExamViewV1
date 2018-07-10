@@ -5,74 +5,62 @@
 <template>
 
 <div>
-  
+
   <Modal
-    v-model="IsModalShow"
+    v-model ="IsModalShow"
     :title="modalFormTitle"
     :mask-closable="false"
     @on-cancel="cancel"
     width="600">
-    <Form ref="modalForm" :model="modalForm" :label-width="80"  value=true  style="padding: 3px 60px">
-      <Form-item label="车牌号" prop="CarPlate" :rules="{required: true, message: '必填,1-10位字符',min:1,max:10, trigger:'blur',type:'string'}" >
-        <Input v-model="modalForm.CarPlate" ></Input>
+    
+    <Form ref="modalForm" :model="modalForm" :label-width="110"  value=true  style="padding: 3px 60px">
+         <Form-item label="客源类型" >
+          <RadioGroup v-model ="modalForm.CusType" type="button" size="large" >
+              <Radio label="教练客源"></Radio>
+              <Radio label="自然客源"></Radio>
+            </RadioGroup>
+        </Form-item>
+      <Form-item label="标准价格" prop="StandardCost" v-if="modalForm.CusType=='自然客源'" :rules="{required: true, message: '必填', trigger:'blur',type:'number'}">
+      ￥<Input-number  v-model ="modalForm.StandardCost"></Input-number>元
       </Form-item>
-      <Form-item label="车编号" prop="CarNum" :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.CarNum" ></Input>
+      <Form-item label="成本价格" prop="BasicCost" v-if="modalForm.CusType=='教练客源'" :rules="{required: true, message: '必填', trigger:'blur',type:'number'}">
+       ￥<Input-number :max="9999" :min="1" v-model ="modalForm.BasicCost"></Input-number>
       </Form-item>
-      <Form-item  label="车架号" prop="CarFrame"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.CarFrame" ></Input>
+      <Form-item  label="满几小时可用" prop="StartHour"  :rules="{required: true, message: '必填,最小1小时，最大10小时', trigger:'blur',type:'number'}" >
+      <InputNumber :max="10" :min="1" v-model ="modalForm.StartHour"></InputNumber>小时
       </Form-item>
-      <Form-item label="电话"  >
-        <Input v-model="modalForm.Mobile" ></Input>
+           <Form-item label="单小时总优惠" prop="HourTotalDiscount" :rules="{required: true, message: '必填', trigger:'blur',type:'number'}">
+       ￥<Input-number :max="9999" :min="1" v-model ="modalForm.HourTotalDiscount"></Input-number>元
       </Form-item>
-      <Form-item label="车辆类型"  >
-        <Select v-model="modalForm.AutoType" placeholder="请选择">
-          <Option v-for="item in AutoTypeCombo" :value="item.key" :key="item.key">{{ item.value }}</Option>
-        </Select>
+           <Form-item label="单小时驾校优惠" v-if="modalForm.CusType=='教练客源'" prop="HourSchoolDiscout" :rules="{required: true, message: '必填', trigger:'blur',type:'number'}">
+      ￥<Input-number :max="9999" :min="1" v-model ="modalForm.HourSchoolDiscout"></Input-number>元
       </Form-item>
-      <Form-item  label="MAC地址" prop="MacAddr"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.MacAddr" ></Input>
-      </Form-item>
-      <Form-item  label="车牌颜色" prop="PlateColor"  >
-        <Select v-model="modalForm.PlateColor" placeholder="请选择">
-          <Option v-for="item in PlateColorCombo" :value="item.key" :key="item.key">{{ item.value }}</Option>
-        </Select>
-      </Form-item>
-      <Form-item  label="生产厂家" prop="Manufacture"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.Manufacture" ></Input>
-      </Form-item>
-      <Form-item  label="品牌" prop="Brand"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.Brand" ></Input>
-      </Form-item>
-      <Form-item  label="车辆类型" prop="Model"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.Model" ></Input>
-      </Form-item>
-
+      <Form-item label="是否立即生效" prop="Enabled" :rules="{required: true, message: '必填', trigger:'blur'}" >
+          <RadioGroup v-model ="modalForm.Enabled" type="button" size="large" >
+              <Radio label="立即生效"></Radio>
+              <Radio label="暂不生效"></Radio>
+            </RadioGroup>
+        </Form-item>
     </Form>
     <div slot="footer">
       <Button type="ghost"  @click="cancel" >取消</Button>
       <Button type="primary"  :loading="modalForm_loading" @click="saveForm('modalForm')">保存</Button>
     </div>
+      
   </Modal>
+
 </div>
 
 </template>
 
 <script>
-import {editUser} from './../../api/getData'
+import {addExamExpense,editExamExpense} from './../../api/getData'
 export default {
     props:{
       parentForm: {
         type: Object,
         default: function () {
           return {
-            Id:'',
-            UserName: '',
-            LoginName: '',
-            Pwd:'',
-            PhoneNum:'',
-            Mobile:'',
-            Sys_RoleId:0,
           }
         }
       },
@@ -98,6 +86,7 @@ export default {
     watch:{
       modalShow(curVal,oldVal){
         this.modalForm=Object.assign(this.parentForm);
+        console.log( this.modalForm);
         this.IsModalShow = curVal;
       }
     },
@@ -117,10 +106,10 @@ export default {
             const params = this.modalForm;
             try{
               let result;
-              if (this.modalFormTitle ==='添加教练车'){
-                 result = await addUser(params);
+              if (this.modalFormTitle ==='添加资费'){
+                 result = await addExamExpense(params);
               }else{
-                 result = await editUser(params);
+                 result = await editExamExpense(params);
               }
               if (result.success) {
                 this.$Message.success('提交成功!');

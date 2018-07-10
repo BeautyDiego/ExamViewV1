@@ -94,7 +94,7 @@
           {
             align:'center',
             title: '价值（元）',
-            key: 'Worth',
+            key: 'Worth',render: (h, params) => { return '￥'+params.row.Worth.toFixed(2);}
           },
           {
             align:'center',

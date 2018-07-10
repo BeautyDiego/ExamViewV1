@@ -131,5 +131,10 @@ export const addExamRateCode = data => fetch('/Exam_RateCode/Add_Exam_RateCode',
 export const editExamRateCode = data => fetch('/Exam_RateCode/Edit_Exam_RateCode', data, 'POST');
 export const delExamRateCode = data => fetch('/Exam_RateCode/Delete_Exam_RateCode', data, 'POST');
 //endregion
-
+//region资费
+export const getExamExpenseList = data => fetch('/Exam_Expense/List_Exam_Expense', data, 'POST');
+export const addExamExpense = data => fetch('/Exam_Expense/Add_Exam_Expense', data, 'POST');
+export const editExamExpense = data => fetch('/Exam_Expense/Edit_Exam_Expense', data, 'POST');
+export const delExamExpense = data => fetch('/Exam_Expense/Delete_Exam_Expense', data, 'POST');
+//endregion
 
