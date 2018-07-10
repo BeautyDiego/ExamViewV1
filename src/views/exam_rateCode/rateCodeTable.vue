@@ -12,20 +12,20 @@
   <div class="simcardTable">
     <div style="background-color:#B0E0E6;padding:10px 0 0;border-radius:4px;position:relative;">
       <Row>
-          <Button class="top-right-btn" size="large" icon="plus" @click="addCar">添加</Button>
+          <Button class="top-right-btn" size="large" icon="plus" @click=" addRate">添加</Button>
 
           <Poptip  width="400" title='搜索' placement="bottom-end" class="top-btn">
               <Button type="primary" icon="ios-search" size="large" >搜  索</Button>
               <div style="text-align:center" slot="content">
                   <Form ref="searchForm" :model="searchForm" :label-width="80"  value=true  style="min-width:200px;padding-top:20px;border-top:1px solid #a3adba;border-bottom:1px solid #a3adba;">
                       <Row>
-                          <Form-item label="用户名称"  >
-                              <Input v-model="searchForm.cus_Name" ></Input>
+                          <Form-item label="所属公司"  >
+                              <Input v-model="searchForm.OwenCompany" ></Input>
                           </Form-item>
                       </Row>
                       <Row>
-                          <Form-item label="流量池编号"  >
-                              <Input v-model="searchForm.pool_Num" ></Input>
+                          <Form-item label="负责人"  >
+                              <Input v-model="searchForm.Owener" ></Input>
                           </Form-item>
                       </Row>
                   </Form>
@@ -68,9 +68,9 @@
 </template>
 
 <script>
-  import {getExamCarList} from './../../api/getData'
+  import {getExamRateCodeList,delExamRateCode} from './../../api/getData'
   import {clearObj} from './../../libs/util';
-  import ordersForm from './rateCodeForm.vue'
+  import rateCodeForm from './rateCodeForm.vue'
   export default {
     name:'rateCodeTable',
     components:{
@@ -80,97 +80,58 @@
       return {
         tableLoading:false,//table是否在加载中
         tableColums: [
-          {
-            align:'center',
-            title: '车牌号',
-            key: 'CarPlate',
+           {
+             type: 'index',
+             width: 60,
+             title:'序号',
+             align: 'center'
           },
           {
             align:'center',
-            title: '车编号',
-            key: 'CarNum',
+            title: '优惠卷编号',
+            key: 'RateCode',
           },
           {
             align:'center',
-            title: '车架号',
-            key: 'CarFrame',
+            title: '价值（元）',
+            key: 'Worth',
+          },
+          {
+            align:'center',
+            title: '优惠起始小时',
+            key: 'StartHour',
           },
           {
               align:'center',
-              title: '自动或手动',
-              key: 'AutoType',
-              render: (h, params) => {
-                  let autoTypeTxt = params.row.AutoType===1?'手动挡':'自动挡';
-                  return h('span', autoTypeTxt);
-              }
+              title: '是否生效',
+              key: 'Enabled',
+            
           },
           {
             align:'center',
-            title: '车辆状态',
-            key: 'CarStatus',
-              render: (h, params) => {
-                  let CarStatusTxt = '';
-                  switch(params.row.CarStatus)
-                  {
-                      case 1:
-                          CarStatusTxt='空闲';
-                          break;
-                      case 2:
-                          CarStatusTxt='考试中';
-                          break;
-                      case 3:
-                          CarStatusTxt='离线';
-                          break;
-                      default:
-                          CarStatusTxt='';
-                  }
-                  return h('span', CarStatusTxt);
-              }
+            title: '开始时间',
+            key: 'StartDate',
+             
           },
           {
             align:'center',
-            title: 'MAC地址',
-            key: 'MacAddr',
+            title: '结束时间',
+            key: 'EndDate',
           },
           {
             align:'center',
-            title: '车牌颜色',
-            key: 'PlateColor',
-              render: (h, params) => {
-                  let PlateColorTxt = '';
-                  switch(params.row.PlateColor)
-                  {
-                      case 1:
-                          PlateColorTxt='黄牌';
-                          break;
-                      case 2:
-                          PlateColorTxt='蓝牌';
-                          break;
-                      default:
-                          PlateColorTxt='';
-                  }
-                  return h('span', PlateColorTxt);
-              }
+            title: '所属公司',
+            key: 'OwenCompany',
           },
           {
             align:'center',
-            title: '车辆照片',
-            key: 'CarPhoto',
+            title: '负责人',
+            key: 'Owener',
           },
           {
             align:'center',
-            title: '生产厂家',
-            key: 'Manufacture',
-          },
-          {
-              align:'center',
-              title: '品牌',
-              key: 'Brand',
-          },
-          {
-              align:'center',
-              title: '模型',
-              key: 'Model',
+            title: '负责人电话',
+            key: 'OwenPhone',
           },
           {
               align:'center',
@@ -192,7 +153,7 @@
                   },
                   on: {
                       click: () => {
-                          this.editCar(params.row)
+                          this.editRate(params.row)
                       }
                   }
               }, '修改'));
@@ -206,7 +167,7 @@
                   },
                   on: {
                       click: () => {
-                          this.delCar(params.row.Id)
+                          this.delRate(params.row.Id)
                       }
                   }
               }, '删除'));
@@ -219,7 +180,7 @@
         total:0,
         currentPage:1,
         formShow:false,
-        formTitle:'添加车辆',
+        formTitle:'添加优惠卷',
         parentForm:{
           Id:'',
           CarPlate: '',
@@ -236,13 +197,10 @@
           Remark:'',
         },
         searchForm:{
-          SimStatus:'全部',
-          PoolNum: '',
-          SimNum: '',
-          CardType:0,//1是单卡，2是流量池成员
+          OwenCompany: '',
+          Owener: '',
           rows:10,
           page:1,
-          CardTypeText:'单卡',
         },
         delModal:false,
         delId:'', //删除的Id
@@ -256,9 +214,8 @@
     },
     methods: {
       resetSearch(){
-        this.searchForm.PoolNum='';
-        this.searchForm.SimNum='';
-        this.searchForm.SimStatus='全部';
+        this.searchForm.OwenCompany='';
+        this.searchForm.Owener='';
       },
       doSearchTableList(){
         this.currentPage=1;
@@ -268,7 +225,7 @@
         this.tableLoading=true;
         this.searchForm.page = this.currentPage;
         const params = this.searchForm;
-        const res = await getExamCarList(params);
+        const res = await getExamRateCodeList(params);
         this.total = res.total;
         this.tableData = res.rows;
         this.tableLoading=false;
@@ -277,31 +234,28 @@
         this.currentPage=num;
         this.getTableList();
       },
-      addCar(){
+       addRate(){
           clearObj(this.parentForm);
-          this.formTitle='添加教练车';
+          this.formTitle='添加优惠卷';
           this.formShow=true;
       },
-      editCar(row){
+      editRate(row){
         this.parentForm=JSON.parse(JSON.stringify(row));
-        this.formTitle='修改教练车';
+        this.formTitle='修改优惠卷';
         this.formShow=true;
       },
-      addFlow(row){
-        this.parentForm=JSON.parse(JSON.stringify(row));
-        this.addFlowformShow=true;
-      },
+
       hideModel(){
         this.formShow=false;
       },
-      delUser(Id){
-          this.delId=Id;
-          this.delModal=true;
+      delRate(Id){
+        this.delId=Id;
+        this.delModal=true;
       },
       async comfirmDel(){
           this.btnLoading=true;
           try{
-              const res= await delUser({Id:this.delId});
+              const res= await delExamRateCode({Id:this.delId});
               if (res.success) {
                   this.$Message.success('删除成功!');
                   this.getTableList();
