@@ -39,6 +39,7 @@ const app = {
     },
     updateMenulist (state) {
       let rbacList = JSON.parse(sessionStorage.getItem('menuList'));
+      debugger;
       let menuList = []
       if(rbacList){
         appRouter.forEach((item, index) => {

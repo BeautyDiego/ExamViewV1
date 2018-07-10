@@ -58,34 +58,21 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-  {
-    path: '/sim-manager',
-    icon: 'ios-infinite',
-    name: 'sim-manager',
-    access: 0,
-    title: 'SIM卡管理',
-    component: Main,
-    children: [
-       { path: 'poolList', title: '流量池管理',access: 0, name: 'poolList', icon: 'link', component:resolve => void(require(['@/views/sim-manager/flowpool/poolList.vue'],resolve)),}, // 懒加载 () => import('@/views/sim-manager/flowpool/poolList.vue') },
-      { path: 'chargeHisTable', title: '流量加油包记录',access: 0, name: 'chargeHisTable', icon: 'link', component: resolve => void(require(['@/views/sim-manager/chargeHis/chargeHisTable.vue'],resolve)),}, // 懒加载() => import('@/views/sim-manager/chargeHis/chargeHisTable.vue') },
-      { path: 'simcard', title: 'SIM卡管理',access: 0, name: 'simcardTable', icon: 'link', component:resolve => void(require(['@/views/sim-manager/simcard/simcardTable.vue'],resolve)),}, // 懒加载 () => import('@/views/sim-manager/simcard/simcardTable.vue') },
-      { path: 'simGroup', title: 'SIM卡分组',access: 0, name: 'simGroupTable', icon: 'link', component:resolve => void(require(['@/views/sim-manager/simGroup/simGroupTable.vue'],resolve)),},
-
-    ]
-  },
-  {
-    path: '/customer-manage',
-    icon: 'ios-infinite',
-    name: 'customer-manage',
-    access: 0,
-    title: '客户管理',
-    component: Main,
-    children: [
-      { path: 'basic_infoTable', title: '客户资料',access: 0, name: 'basic_infoTable', icon: 'link', component: resolve => void(require(['@/views/customer-manager/basic_info/basic_infoTable.vue'],resolve)),}, // 懒加载 () => import('@/views/customer-manager/basic_info/basic_infoTable.vue') },
-      { path: 'cus_orderTable', title: '订单管理',access: 0, name: 'cus_orderTable', icon: 'link', component:resolve => void(require(['@/views/customer-manager/cus_order/cus_orderTable.vue'],resolve)),}, // 懒加载 () => import('@/views/customer-manager/cus_order/cus_orderTable.vue') }
-      { path: 'Cus_AccountDetailTable', title: '充值管理',access: 0, name: 'Cus_AccountDetailTable', icon: 'link', component:resolve => void(require(['@/views/customer-manager/Cus_AccountDetail/Cus_AccountDetailTable.vue'],resolve)),}, // 懒加载 () => import('@/views/customer-manager/Cus_AccountDetail/Cus_AccountDetailTable.vue') }
-    ]
-  },
+    {
+        path: '/exam',
+        icon: 'ios-infinite',
+        name: 'exam',
+        access: 0,
+        title: '资源管理',
+        component: Main,
+        children: [
+            { path: 'carTable', title: '教练车',access: 0, name: 'carTable', icon: 'link', component: resolve => void(require(['@/views/exam_car/carTable.vue'],resolve)),}, // 懒加载 () => import('@/views/customer-manager/basic_info/basic_infoTable.vue') },
+            { path: 'coachTable', title: '教练员',access: 0, name: 'coachTable', icon: 'link', component: resolve => void(require(['@/views/exam_coach/coachTable.vue'],resolve)),},
+            { path: 'expenseTable', title: '资费活动',access: 0, name: 'expenseTable', icon: 'link', component: resolve => void(require(['@/views/exam_expense/expenseTable.vue'],resolve)),},
+            { path: 'ordersTable', title: '订单',access: 0, name: 'ordersTable', icon: 'link', component: resolve => void(require(['@/views/exam_orders/ordersTable.vue'],resolve)),},
+            { path: 'rateCodeTable', title: '优惠券',access: 0, name: 'rateCodeTable', icon: 'link', component: resolve => void(require(['@/views/exam_rateCode/rateCodeTable.vue'],resolve)),},
+        ]
+    },
     {
         path: '/sys-manage',
         icon: 'ios-infinite',
@@ -99,30 +86,6 @@ export const appRouter = [
             { path: 'roleTable', title: '角色管理', access: 0, name: 'roleTable', icon: 'link', component:  resolve => void(require(['@/views/sys-manage/role/roleTable.vue'],resolve)),}, // 懒加载() => import('@/views/sys-manage/role/roleTable.vue') }
         ]
     },
-      {
-        path: '/sim-config',
-        icon: 'ios-infinite',
-        name: 'sim-config',
-        access: 0,
-        title: 'SIM配置',
-        component: Main,
-        children: [
-          { path: 'simExpanseConfigTable', title: '资费配置',access: 0, name: 'sim-expanseconfig', icon: 'link', component: resolve => void(require(['@/views/sim-config/expanse-config/simExpanseConfigTable.vue'],resolve)),}, // 懒加载 () => import('@/views/sim-config/expanse-config/simExpanseConfigTable.vue') }
-          { path: 'expanseTable', title: '新资费配置',access: 0, name: 'res-expanseconfig', icon: 'link', component: resolve => void(require(['@/views/sim-config/res-expanse/expanseTable.vue'],resolve)),}, 
-         // { path: 'simExpanseConfigTable', title: '资费配置',access: 0, name: 'sim-expanseconfig', icon: 'link', component: resolve => void(require(['@/views/sim-config/expanse-config/simExpanseConfigTable.vue'],resolve)),}, 
-        ]
-      },
-  {
-    path: '/Operator',
-    icon: 'ios-infinite',
-    name: 'Operator',
-    access: 0,
-    title: '运营商管理',
-    component: Main,
-    children: [
-      { path: 'Res_OperatorTable', title: '运营商管理',access: 0, name: 'Res_OperatorTable', icon: 'link', component: resolve => void(require(['@/views/Operator/Res_Operator/Res_OperatorTable.vue'],resolve)),}, // 懒加载 () => import('@/views/Operator/Res_Operator/Res_OperatorTable.vue') },
-    ]
-  },
 ];
 
 // 所有上面定义的路由都要写在下面的routers里

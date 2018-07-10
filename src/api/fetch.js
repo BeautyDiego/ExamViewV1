@@ -20,27 +20,28 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 
 
   if (window.fetch && method == 'fetch') {
-    let myHeaders = new Headers();
 
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('Accept', 'application/json');
-    let tokenValue = sessionStorage.getItem("token");
-    if (tokenValue){
-      myHeaders.append('Authorization', tokenValue);
-    }
-    let requestConfig = {
-      method: type,
-      headers: myHeaders,
-      mode: "cors",
-      cache: "force-cache",
-      credentials: 'include'
-    }
+      let myHeaders = new Headers();
 
-    if (type == 'POST') {
-      Object.defineProperty(requestConfig, 'body', {
-        value: JSON.stringify(data)
-      })
-    }
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Accept', 'application/json');
+      let tokenValue = sessionStorage.getItem("token");
+      if (tokenValue){
+          myHeaders.append('Authorization', tokenValue);
+      }
+      let requestConfig = {
+          method: type,
+          headers: myHeaders,
+          mode: "cors",
+          cache: "force-cache",
+          credentials: 'include'
+      }
+
+      if (type == 'POST') {
+          Object.defineProperty(requestConfig, 'body', {
+              value: JSON.stringify(data)
+          })
+      }
 
     try {
       const response = await fetch(url, requestConfig);
