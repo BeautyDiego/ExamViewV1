@@ -19,13 +19,18 @@
               <div style="text-align:center" slot="content">
                   <Form ref="searchForm" :model="searchForm" :label-width="80"  value=true  style="min-width:200px;padding-top:20px;border-top:1px solid #a3adba;border-bottom:1px solid #a3adba;">
                       <Row>
-                          <Form-item label="用户名称"  >
-                              <Input v-model="searchForm.cus_Name" ></Input>
+                          <Form-item label="教练名"  >
+                              <Input v-model="searchForm.coach_Name" ></Input>
                           </Form-item>
                       </Row>
                       <Row>
-                          <Form-item label="流量池编号"  >
-                              <Input v-model="searchForm.pool_Num" ></Input>
+                          <Form-item label="手机号"  >
+                              <Input v-model="searchForm.coach_mobile" ></Input>
+                          </Form-item>
+                      </Row>
+                      <Row>
+                          <Form-item label="所属驾校"  >
+                              <Input v-model="searchForm.school" ></Input>
                           </Form-item>
                       </Row>
                   </Form>
@@ -68,7 +73,7 @@
 </template>
 
 <script>
-  import {getExamCarList} from './../../api/getData'
+  import {getExamCoachList,deleteExamCoach} from './../../api/getData'
   import {clearObj} from './../../libs/util';
   import coachForm from './coachForm.vue'
   export default {
@@ -82,100 +87,23 @@
         tableColums: [
           {
             align:'center',
-            title: '车牌号',
-            key: 'CarPlate',
+            title: '教练名',
+            key: 'CoachName',
           },
           {
             align:'center',
-            title: '车编号',
-            key: 'CarNum',
+            title: '电话',
+            key: 'CoachMobile',
           },
           {
             align:'center',
-            title: '车架号',
-            key: 'CarFrame',
-          },
-          {
-              align:'center',
-              title: '自动或手动',
-              key: 'AutoType',
-              render: (h, params) => {
-                  let autoTypeTxt = params.row.AutoType===1?'手动挡':'自动挡';
-                  return h('span', autoTypeTxt);
-              }
+            title: '所属驾校',
+            key: 'DrivingSchName',
           },
           {
             align:'center',
-            title: '车辆状态',
-            key: 'CarStatus',
-              render: (h, params) => {
-                  let CarStatusTxt = '';
-                  switch(params.row.CarStatus)
-                  {
-                      case 1:
-                          CarStatusTxt='空闲';
-                          break;
-                      case 2:
-                          CarStatusTxt='考试中';
-                          break;
-                      case 3:
-                          CarStatusTxt='离线';
-                          break;
-                      default:
-                          CarStatusTxt='';
-                  }
-                  return h('span', CarStatusTxt);
-              }
-          },
-          {
-            align:'center',
-            title: 'MAC地址',
-            key: 'MacAddr',
-          },
-          {
-            align:'center',
-            title: '车牌颜色',
-            key: 'PlateColor',
-              render: (h, params) => {
-                  let PlateColorTxt = '';
-                  switch(params.row.PlateColor)
-                  {
-                      case 1:
-                          PlateColorTxt='黄牌';
-                          break;
-                      case 2:
-                          PlateColorTxt='蓝牌';
-                          break;
-                      default:
-                          PlateColorTxt='';
-                  }
-                  return h('span', PlateColorTxt);
-              }
-          },
-          {
-            align:'center',
-            title: '车辆照片',
-            key: 'CarPhoto',
-          },
-          {
-            align:'center',
-            title: '生产厂家',
-            key: 'Manufacture',
-          },
-          {
-              align:'center',
-              title: '品牌',
-              key: 'Brand',
-          },
-          {
-              align:'center',
-              title: '模型',
-              key: 'Model',
-          },
-          {
-              align:'center',
-              title: '备注',
-              key: 'Remark',
+            title: '备注',
+            key: 'Remark',
           },
           {
             title: '操作',
@@ -192,7 +120,7 @@
                   },
                   on: {
                       click: () => {
-                          this.editCar(params.row)
+                          this.editCoach(params.row)
                       }
                   }
               }, '修改'));
@@ -206,7 +134,7 @@
                   },
                   on: {
                       click: () => {
-                          this.delCar(params.row.Id)
+                          this.delCoach(params.row.Id)
                       }
                   }
               }, '删除'));
@@ -219,30 +147,20 @@
         total:0,
         currentPage:1,
         formShow:false,
-        formTitle:'添加车辆',
+        formTitle:'添加教练员',
         parentForm:{
-          Id:'',
-          CarPlate: '',
-          CarNum: '',
-          CarFrame: '',
-          AutoType: '',
-          CarStatus: '',
-          MacAddr: '',
-          PlateColor: '',
-          CarPhoto:'',
-          Manufacture:'',
-          Brand:'',
-          Model:'',
-          Remark:'',
+            Id:'',
+            CoachName: '',
+            CoachMobile: '',
+            DrivingSchName: '',
+            Remark: '',
         },
         searchForm:{
-          SimStatus:'全部',
-          PoolNum: '',
-          SimNum: '',
-          CardType:0,//1是单卡，2是流量池成员
+          coach_Name: '',
+          coach_mobile:'',
+          school: '',
           rows:10,
           page:1,
-          CardTypeText:'单卡',
         },
         delModal:false,
         delId:'', //删除的Id
@@ -268,7 +186,7 @@
         this.tableLoading=true;
         this.searchForm.page = this.currentPage;
         const params = this.searchForm;
-        const res = await getExamCarList(params);
+        const res = await getExamCoachList(params);
         this.total = res.total;
         this.tableData = res.rows;
         this.tableLoading=false;
@@ -279,22 +197,18 @@
       },
       addCar(){
           clearObj(this.parentForm);
-          this.formTitle='添加教练车';
+          this.formTitle='添加教练员';
           this.formShow=true;
       },
-      editCar(row){
+      editCoach(row){
         this.parentForm=JSON.parse(JSON.stringify(row));
-        this.formTitle='修改教练车';
+        this.formTitle='修改教练员';
         this.formShow=true;
-      },
-      addFlow(row){
-        this.parentForm=JSON.parse(JSON.stringify(row));
-        this.addFlowformShow=true;
       },
       hideModel(){
         this.formShow=false;
       },
-      delUser(Id){
+      delCoach(Id){
           this.delId=Id;
           this.delModal=true;
       },
