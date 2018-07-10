@@ -121,11 +121,18 @@ export const resetUserPwd = data => fetch('/Sys_Users/ResetPwd_Web_User', data, 
 // region 教练车
 export const getExamCarList = data => fetch('/Exam_Car/List_Exam_Car', data, 'POST');
 export const addExamCar = data => fetch('/Exam_Car/Add_Exam_Car', data, 'POST');
-export const editExamCarList = data => fetch('/Exam_Car/Edit_Exam_Car', data, 'POST');
-export const deleteExamCarList = data => fetch('/Exam_Car/Delete_Exam_Car', data, 'POST');
+export const editExamCar = data => fetch('/Exam_Car/Edit_Exam_Car', data, 'POST');
+export const deleteExamCar = data => fetch('/Exam_Car/Delete_Exam_Car', data, 'POST');
 //   endregion
 
-//region优惠卷
+// region 教练员
+export const getExamCoachList = data => fetch('/Exam_Coach/List_Exam_Coach', data, 'POST');
+export const addExamCoach = data => fetch('/Exam_Coach/Add_Exam_Coach', data, 'POST');
+export const editExamCoach = data => fetch('/Exam_Coach/Edit_Exam_Coach', data, 'POST');
+export const deleteExamCoach = data => fetch('/Exam_Coach/Delete_Exam_Coach', data, 'POST');
+//   endregion
+
+// region优惠卷
 export const getExamRateCodeList = data => fetch('/Exam_RateCode/List_Exam_RateCode', data, 'POST');
 export const addExamRateCode = data => fetch('/Exam_RateCode/Add_Exam_RateCode', data, 'POST');
 export const editExamRateCode = data => fetch('/Exam_RateCode/Edit_Exam_RateCode', data, 'POST');
@@ -137,4 +144,6 @@ export const addExamExpense = data => fetch('/Exam_Expense/Add_Exam_Expense', da
 export const editExamExpense = data => fetch('/Exam_Expense/Edit_Exam_Expense', data, 'POST');
 export const delExamExpense = data => fetch('/Exam_Expense/Delete_Exam_Expense', data, 'POST');
 //endregion
+// endregion
+
 

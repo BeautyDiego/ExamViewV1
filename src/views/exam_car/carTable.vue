@@ -19,13 +19,13 @@
               <div style="text-align:center" slot="content">
                   <Form ref="searchForm" :model="searchForm" :label-width="80"  value=true  style="min-width:200px;padding-top:20px;border-top:1px solid #a3adba;border-bottom:1px solid #a3adba;">
                       <Row>
-                          <Form-item label="用户名称"  >
-                              <Input v-model="searchForm.cus_Name" ></Input>
+                          <Form-item label="车牌号"  >
+                              <Input v-model="searchForm.car_Plate" ></Input>
                           </Form-item>
                       </Row>
                       <Row>
-                          <Form-item label="流量池编号"  >
-                              <Input v-model="searchForm.pool_Num" ></Input>
+                          <Form-item label="MAC地址"  >
+                              <Input v-model="searchForm.car_Mac" ></Input>
                           </Form-item>
                       </Row>
                   </Form>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-  import {getExamCarList} from './../../api/getData'
+  import {getExamCarList,deleteExamCar} from './../../api/getData'
   import {clearObj} from './../../libs/util';
   import carForm from './carForm.vue'
   export default {
@@ -156,6 +156,21 @@
             align:'center',
             title: '车辆照片',
             key: 'CarPhoto',
+              render: (h, params) => {
+                  let photoSrc = '';
+                  if(params.row.CarPhoto)
+                  {
+                      photoSrc= this.UpLoadURL_PREFIX + params.row.CarPhoto;
+                  }
+                  return h('img',  {
+                      attrs: {
+                          src: photoSrc
+                      },
+                      style: {
+                          width: '60px'
+                      }
+                  });
+              }
           },
           {
             align:'center',
@@ -236,13 +251,10 @@
           Remark:'',
         },
         searchForm:{
-          SimStatus:'全部',
-          PoolNum: '',
-          SimNum: '',
-          CardType:0,//1是单卡，2是流量池成员
+          car_Plate:'',
+          car_Mac: '',
           rows:10,
           page:1,
-          CardTypeText:'单卡',
         },
         delModal:false,
         delId:'', //删除的Id
@@ -294,14 +306,14 @@
       hideModel(){
         this.formShow=false;
       },
-      delUser(Id){
+      delCar(Id){
           this.delId=Id;
           this.delModal=true;
       },
       async comfirmDel(){
           this.btnLoading=true;
           try{
-              const res= await delUser({Id:this.delId});
+              const res= await deleteExamCar({Id:this.delId});
               if (res.success) {
                   this.$Message.success('删除成功!');
                   this.getTableList();

@@ -12,40 +12,18 @@
     :mask-closable="false"
     @on-cancel="cancel"
     width="600">
-    <Form ref="modalForm" :model="modalForm" :label-width="80"  value=true  style="padding: 3px 60px">
-      <Form-item label="车牌号" prop="CarPlate" :rules="{required: true, message: '必填,1-10位字符',min:1,max:10, trigger:'blur',type:'string'}" >
-        <Input v-model="modalForm.CarPlate" ></Input>
+    <Form ref="modalForm" :model="modalForm" :label-width="100"  value=true  style="padding: 3px 60px">
+      <Form-item label="教练名" prop="CoachName" :rules="{required: true, message: '必填,1-10位字符',min:1,max:10, trigger:'blur',type:'string'}" >
+        <Input v-model="modalForm.CoachName" ></Input>
       </Form-item>
-      <Form-item label="车编号" prop="CarNum" :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.CarNum" ></Input>
+      <Form-item label="手机号" prop="CoachMobile" :rules="{required: true, message: '必填,如18628888888这样11位手机号', trigger:'blur',type:'string',pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/}" >
+        <Input v-model="modalForm.CoachMobile" ></Input>
       </Form-item>
-      <Form-item  label="车架号" prop="CarFrame"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.CarFrame" ></Input>
+      <Form-item  label="所属驾校名" prop="DrivingSchName"  :rules="{required: true, message: '必填,1-20位字符',min:1,max:20, trigger:'blur',type:'string'}" >
+        <Input v-model="modalForm.DrivingSchName" ></Input>
       </Form-item>
-      <Form-item label="电话"  >
-        <Input v-model="modalForm.Mobile" ></Input>
-      </Form-item>
-      <Form-item label="车辆类型"  >
-        <Select v-model="modalForm.AutoType" placeholder="请选择">
-          <Option v-for="item in AutoTypeCombo" :value="item.key" :key="item.key">{{ item.value }}</Option>
-        </Select>
-      </Form-item>
-      <Form-item  label="MAC地址" prop="MacAddr"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.MacAddr" ></Input>
-      </Form-item>
-      <Form-item  label="车牌颜色" prop="PlateColor"  >
-        <Select v-model="modalForm.PlateColor" placeholder="请选择">
-          <Option v-for="item in PlateColorCombo" :value="item.key" :key="item.key">{{ item.value }}</Option>
-        </Select>
-      </Form-item>
-      <Form-item  label="生产厂家" prop="Manufacture"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.Manufacture" ></Input>
-      </Form-item>
-      <Form-item  label="品牌" prop="Brand"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.Brand" ></Input>
-      </Form-item>
-      <Form-item  label="车辆类型" prop="Model"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
-        <Input v-model="modalForm.Model" ></Input>
+      <Form-item  label="备注"    >
+        <Input v-model="modalForm.Remark"  type="textarea"  :rows="2" maxlength="200" ></Input>
       </Form-item>
 
     </Form>
@@ -59,20 +37,18 @@
 </template>
 
 <script>
-import {editUser} from './../../api/getData'
+import {addExamCoach,editExamCoach} from './../../api/getData'
 export default {
     props:{
       parentForm: {
         type: Object,
         default: function () {
           return {
-            Id:'',
-            UserName: '',
-            LoginName: '',
-            Pwd:'',
-            PhoneNum:'',
-            Mobile:'',
-            Sys_RoleId:0,
+              Id:'',
+              CoachName: '',
+              CoachMobile: '',
+              DrivingSchName: '',
+              Remark: '',
           }
         }
       },
@@ -82,7 +58,7 @@ export default {
       },
       modalFormTitle:{
         type: String,
-        default: '添加用户',
+        default: '添加教练员',
       },
     },
     data() {
@@ -91,8 +67,6 @@ export default {
           modalForm:{
           },
           modalForm_loading:false,
-          AutoTypeCombo:[{key:1,value:'手动挡'},{key:2,value:'自动挡'}],
-          PlateColorCombo:[{key:1,value:'黄牌'},{key:2,value:'蓝牌'}],
         }
     },
     watch:{
@@ -117,10 +91,10 @@ export default {
             const params = this.modalForm;
             try{
               let result;
-              if (this.modalFormTitle ==='添加教练车'){
-                 result = await addUser(params);
+              if (this.modalFormTitle ==='添加教练员'){
+                 result = await addExamCoach(params);
               }else{
-                 result = await editUser(params);
+                 result = await editExamCoach(params);
               }
               if (result.success) {
                 this.$Message.success('提交成功!');
