@@ -50,18 +50,18 @@
     <Form ref="modalForm" :model="modalForm" :label-width="80"  value=true  style="padding: 3px 60px">
       <Row>
         <Col span="12">
-          <Form-item label="车牌号" prop="CarPlate" :rules="{required: true, message: '必填,1-10位字符',min:1,max:10, trigger:'blur',type:'string',pattern:/^([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1})$/}" >
+          <Form-item label="车牌号" prop="CarPlate" :rules="{required: true, message: '必填,请输入正确的车牌号',min:1,max:10, trigger:'blur',type:'string',pattern:/^([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1})$/}" >
             <Input v-model="modalForm.CarPlate" ></Input>
           </Form-item>
-          <Form-item label="车编号" prop="CarNum" :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
+          <Form-item label="车编号" prop="CarNum" :rules="{required: true, message: '必填,1-6位数字或字母', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{1,6}$/}" >
             <Input v-model="modalForm.CarNum" ></Input>
           </Form-item>
-          <Form-item  label="车架号" prop="CarFrame"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
+          <Form-item  label="车架号" prop="CarFrame"  :rules="{required: true, message: '必填,6-20位数字或字母', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,20}$/}" >
             <Input v-model="modalForm.CarFrame" ></Input>
           </Form-item>
         </Col>
         <Col span="12">
-          <Form-item label="商品缩略图"  >
+          <Form-item label="车辆照片"  >
           <div class="smallImg">
             <div  v-if="modalForm.CarPhoto" class="demo-upload-list" >
               <img :src="UpLoadURL_PREFIX+modalForm.CarPhoto">
@@ -102,7 +102,7 @@
           <Option v-for="item in AutoTypeCombo" :value="item.key" :key="item.key">{{ item.value }}</Option>
         </Select>
       </Form-item>
-      <Form-item  label="MAC地址" prop="MacAddr"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,16}$/}" >
+      <Form-item  label="MAC地址" prop="MacAddr"   >
         <Input v-model="modalForm.MacAddr" ></Input>
       </Form-item>
       <Form-item  label="车牌颜色" prop="PlateColor"  >
