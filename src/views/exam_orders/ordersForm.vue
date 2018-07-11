@@ -61,7 +61,7 @@
                 <Input v-model="modalForm.RateCode" ></Input>
               </Col>
               <Col offset="1" span="6">
-                <Button :loading="modalForm_loading" type="warning" @click="getRateCode()">验证优惠</Button>
+                <Button :loading="modalForm_loading" type="warning" @click="getRateCode()" :disabled="IsDiscounted">验证优惠</Button>
               </Col>
             </Row>
 
@@ -162,6 +162,7 @@ export default {
           rateCode:{RateCode:'',Worth:0,StartHour:'',StartDate:'',EndDate:''},
           coach:{},
           standCostMin:0,
+          IsDiscounted:false,
         }
     },
     watch:{
@@ -173,7 +174,7 @@ export default {
         this.IsModalShow = curVal;
         this.currentStep = 0;
         this.rateCode={RateCode:'',Worth:0,StartHour:'',StartDate:'',EndDate:''};
-
+        this.IsDiscounted=false;
       }
     },
     computed:{
@@ -309,10 +310,10 @@ export default {
           let res = await getRateCode({RateCode:this.modalForm.RateCode});
           if (res.success) {
               this.rateCode = res.rateCode;
+              this.IsDiscounted = true; // 只能优惠一次
           }else{
               this.$Message.error(res.msg);
           }
-          console.log(this.rateCode)
           this.modalForm_loading=false;
       },
     }
