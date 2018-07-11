@@ -68,7 +68,7 @@
 </template>
 
 <script>
-  import {getExamCarList} from './../../api/getData'
+  import {getExamOrderList} from './../../api/getData'
   import {clearObj} from './../../libs/util';
   import ordersForm from './ordersForm.vue'
   export default {
@@ -82,100 +82,100 @@
         tableColums: [
           {
             align:'center',
-            title: '车牌号',
-            key: 'CarPlate',
+            title: '订单号',
+            key: 'OrderNum',
           },
           {
             align:'center',
-            title: '车编号',
-            key: 'CarNum',
+            title: '教练员',
+            key: 'Exam_CoachName',
           },
           {
             align:'center',
-            title: '车架号',
-            key: 'CarFrame',
+            title: '教练手机',
+            key: 'Exam_CoachMobile',
           },
+            {
+                align:'center',
+                title: '车牌号',
+                key: 'Exam_CarPlate',
+            },
+            {
+                align:'center',
+                title: '车编号',
+                key: 'Exam_CarNum',
+            },
           {
               align:'center',
               title: '自动或手动',
-              key: 'AutoType',
+              key: 'Exam_CarType',
               render: (h, params) => {
-                  let autoTypeTxt = params.row.AutoType===1?'手动挡':'自动挡';
+                  let autoTypeTxt = params.row.Exam_CarType===1?'手动挡':'自动挡';
                   return h('span', autoTypeTxt);
               }
           },
           {
             align:'center',
-            title: '车辆状态',
+            title: '订单状态',
             key: 'CarStatus',
               render: (h, params) => {
-                  let CarStatusTxt = '';
-                  switch(params.row.CarStatus)
+                  let OrderStatusTxt = '';
+                  switch(params.row.OrderStatus)
                   {
                       case 1:
-                          CarStatusTxt='空闲';
+                          OrderStatusTxt='空闲';
                           break;
                       case 2:
-                          CarStatusTxt='考试中';
+                          OrderStatusTxt='考试中';
                           break;
                       case 3:
-                          CarStatusTxt='离线';
+                          OrderStatusTxt='离线';
                           break;
                       default:
-                          CarStatusTxt='';
+                          OrderStatusTxt='';
                   }
-                  return h('span', CarStatusTxt);
+                  return h('span', OrderStatusTxt);
               }
           },
           {
             align:'center',
-            title: 'MAC地址',
-            key: 'MacAddr',
+            title: '学习时长',
+            key: 'ExamHour',
           },
           {
             align:'center',
-            title: '车牌颜色',
-            key: 'PlateColor',
-              render: (h, params) => {
-                  let PlateColorTxt = '';
-                  switch(params.row.PlateColor)
-                  {
-                      case 1:
-                          PlateColorTxt='黄牌';
-                          break;
-                      case 2:
-                          PlateColorTxt='蓝牌';
-                          break;
-                      default:
-                          PlateColorTxt='';
-                  }
-                  return h('span', PlateColorTxt);
-              }
+            title: '开始时间',
+            key: 'ExamStart',
           },
           {
             align:'center',
-            title: '车辆照片',
-            key: 'CarPhoto',
+            title: '结束时间',
+            key: 'ExamEnd',
           },
           {
             align:'center',
-            title: '生产厂家',
-            key: 'Manufacture',
+            title: '教练价格',
+            key: 'CoachPrice',
           },
           {
               align:'center',
-              title: '品牌',
-              key: 'Brand',
+              title: '总价格',
+              key: 'TotalCost',
           },
           {
               align:'center',
-              title: '模型',
-              key: 'Model',
+              title: '成本价格',
+              key: 'BasicCost',
           },
           {
               align:'center',
-              title: '备注',
-              key: 'Remark',
+              title: '单小时总优惠',
+              key: 'HourTotalDiscount',
+          },
+          {
+            align:'center',
+            title: '单小时驾校优惠',
+            key: 'HourSchoolDiscout',
           },
           {
             title: '操作',
@@ -219,7 +219,7 @@
         total:0,
         currentPage:1,
         formShow:false,
-        formTitle:'添加车辆',
+        formTitle:'新增订单',
         parentForm:{
           Id:'',
           CarPlate: '',
@@ -268,7 +268,7 @@
         this.tableLoading=true;
         this.searchForm.page = this.currentPage;
         const params = this.searchForm;
-        const res = await getExamCarList(params);
+        const res = await getExamOrderList(params);
         this.total = res.total;
         this.tableData = res.rows;
         this.tableLoading=false;
@@ -279,7 +279,7 @@
       },
       addCar(){
           clearObj(this.parentForm);
-          this.formTitle='添加教练车';
+          this.formTitle='新增订单';
           this.formShow=true;
       },
       editCar(row){

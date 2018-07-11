@@ -137,13 +137,24 @@ export const getExamRateCodeList = data => fetch('/Exam_RateCode/List_Exam_RateC
 export const addExamRateCode = data => fetch('/Exam_RateCode/Add_Exam_RateCode', data, 'POST');
 export const editExamRateCode = data => fetch('/Exam_RateCode/Edit_Exam_RateCode', data, 'POST');
 export const delExamRateCode = data => fetch('/Exam_RateCode/Delete_Exam_RateCode', data, 'POST');
-//endregion
-//region资费
+// endregion
+
+// region资费
 export const getExamExpenseList = data => fetch('/Exam_Expense/List_Exam_Expense', data, 'POST');
 export const addExamExpense = data => fetch('/Exam_Expense/Add_Exam_Expense', data, 'POST');
 export const editExamExpense = data => fetch('/Exam_Expense/Edit_Exam_Expense', data, 'POST');
 export const delExamExpense = data => fetch('/Exam_Expense/Delete_Exam_Expense', data, 'POST');
-//endregion
 // endregion
+
+
+// region订单
+export const getValidCarCombo = data => fetch('/Exam_Car/Get_Valid_CarCombo', data, 'POST');
+export const getExamExpense = data => fetch('/Exam_Expense/Get_Exam_Expense', data, 'POST');
+export const validateCoachMobile = data => fetch('/Exam_Coach/Validate_Exam_Coach', data, 'POST');
+export const getRateCode = data => fetch('/Exam_RateCode/Get_Exam_RateCode', data, 'POST');
+export const getExamOrderList = data => fetch('/Exam_Orders/List_Exam_Orders', data, 'POST')
+export const addExamOrder = data => fetch('/Exam_Orders/Add_Exam_Orders', data, 'POST')
+// endregion
+
 
 

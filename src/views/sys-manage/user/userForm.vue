@@ -31,7 +31,7 @@
         </Select>
       </Form-item>
       <Form-item label="角色" prop="Sys_RoleId" :rules="{required: true, message: '必选', trigger:'change', type:'number'}"  >
-        <Select v-model="modalForm.Sys_RoleId" placeholder="请选择" disabled>
+        <Select v-model="modalForm.Sys_RoleId" placeholder="请选择">
           <Option v-for="item in roleComboList" :value="item.Id" :key="item.Id">{{ item.RoleName }}</Option>
         </Select>
       </Form-item>
