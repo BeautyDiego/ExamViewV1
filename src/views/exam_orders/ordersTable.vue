@@ -71,15 +71,28 @@
   import {getExamOrderList} from './../../api/getData'
   import {clearObj} from './../../libs/util';
   import ordersForm from './ordersForm.vue'
+  import orderExpandTable from './ordersExpandTable.vue';
   export default {
     name:'ordersTable',
     components:{
         ordersForm,
+        orderExpandTable
     },
     data() {
       return {
         tableLoading:false,//table是否在加载中
         tableColums: [
+            {
+                type: 'expand',
+                width: 50,
+                render: (h, params) => {
+                    return h(orderExpandTable, {
+                        props: {
+                            row: params.row
+                        }
+                    })
+                }
+            },
           {
             align:'center',
             title: '订单号',
@@ -123,13 +136,10 @@
                   switch(params.row.OrderStatus)
                   {
                       case 1:
-                          OrderStatusTxt='空闲';
+                          OrderStatusTxt='考试开始';
                           break;
                       case 2:
-                          OrderStatusTxt='考试中';
-                          break;
-                      case 3:
-                          OrderStatusTxt='离线';
+                          OrderStatusTxt='考试结束';
                           break;
                       default:
                           OrderStatusTxt='';
@@ -152,67 +162,67 @@
             title: '结束时间',
             key: 'ExamEnd',
           },
-          {
-            align:'center',
-            title: '教练价格',
-            key: 'CoachPrice',
-          },
-          {
-              align:'center',
-              title: '总价格',
-              key: 'TotalCost',
-          },
-          {
-              align:'center',
-              title: '成本价格',
-              key: 'BasicCost',
-          },
-          {
-              align:'center',
-              title: '单小时总优惠',
-              key: 'HourTotalDiscount',
-          },
-          {
-            align:'center',
-            title: '单小时驾校优惠',
-            key: 'HourSchoolDiscout',
-          },
-          {
-            title: '操作',
-            align: 'center',
-            render: (h, params) => {
-              let actions=[];
-              actions.push( h('Button', {
-                  props: {
-                      type: 'warning',
-                      size: 'small'
-                  },
-                  style: {
-                      marginRight: '5px'
-                  },
-                  on: {
-                      click: () => {
-                          this.editCar(params.row)
-                      }
-                  }
-              }, '修改'));
-              actions.push(  h('Button', {
-                  props: {
-                      type: 'error',
-                      size: 'small'
-                  },
-                  style: {
-                      marginRight: '5px'
-                  },
-                  on: {
-                      click: () => {
-                          this.delCar(params.row.Id)
-                      }
-                  }
-              }, '删除'));
-              return h('div', actions);
-            }
-          }
+//          {
+//            align:'center',
+//            title: '教练价格',
+//            key: 'CoachPrice',
+//          },
+//          {
+//              align:'center',
+//              title: '总价格',
+//              key: 'TotalCost',
+//          },
+//          {
+//              align:'center',
+//              title: '成本价格',
+//              key: 'BasicCost',
+//          },
+//          {
+//              align:'center',
+//              title: '单小时总优惠',
+//              key: 'HourTotalDiscount',
+//          },
+//          {
+//            align:'center',
+//            title: '单小时驾校优惠',
+//            key: 'HourSchoolDiscout',
+//          },
+//          {
+//            title: '操作',
+//            align: 'center',
+//            render: (h, params) => {
+//              let actions=[];
+//              actions.push( h('Button', {
+//                  props: {
+//                      type: 'warning',
+//                      size: 'small'
+//                  },
+//                  style: {
+//                      marginRight: '5px'
+//                  },
+//                  on: {
+//                      click: () => {
+//                          this.editCar(params.row)
+//                      }
+//                  }
+//              }, '修改'));
+//              actions.push(  h('Button', {
+//                  props: {
+//                      type: 'error',
+//                      size: 'small'
+//                  },
+//                  style: {
+//                      marginRight: '5px'
+//                  },
+//                  on: {
+//                      click: () => {
+//                          this.delCar(params.row.Id)
+//                      }
+//                  }
+//              }, '删除'));
+//              return h('div', actions);
+//            }
+//          }
         ],
         tableData: [
         ],

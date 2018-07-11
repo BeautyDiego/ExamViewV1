@@ -75,8 +75,8 @@
               <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员：</Col><Col span="12">{{modalForm.Exam_CoachName}}</Col></Row>
               <Row class="setting-row"><Col span="12" class="setting-title">车牌：</Col><Col span="12">{{modalForm.Exam_CarPlate}}</Col></Row>
               <Row class="setting-row"><Col span="12" class="setting-title">车号：</Col><Col span="12">{{modalForm.Exam_CarNum}}</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">车类型：</Col><Col span="12">{{modalForm.Exam_CarType}}</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">学习时长：</Col><Col span="12">{{modalForm.ExamHour}}</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">车类型：</Col><Col span="12">{{modalForm.Exam_CarType===1?'手动挡':'自动挡'}}</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">学习时长：</Col><Col span="12">{{modalForm.ExamHour}}小时</Col></Row>
               <Row class="setting-row"><Col span="12" class="setting-title">每个小时单价：</Col><Col span="12">￥{{modalForm.CostPerHour}}</Col></Row>
               <Row class="setting-row"><Col span="12" class="setting-title">单个钟优惠：</Col><Col span="12">￥{{expense.HourTotalDiscount}}</Col></Row>
               <Row class="setting-row" v-if="!IsCoachSource"><Col span="12" class="setting-title">优惠券优惠：</Col><Col span="12">￥{{rateCode.Worth}}</Col></Row>
@@ -167,10 +167,13 @@ export default {
     watch:{
       modalShow(curVal,oldVal){
         // this.modalForm=Object.assign(this.parentForm);
+        this.getValidCarCombo();
         clearObj(this.modalForm);
         this.modalForm.CusType='自然客源';
         this.IsModalShow = curVal;
         this.currentStep = 0;
+        this.rateCode={RateCode:'',Worth:0,StartHour:'',StartDate:'',EndDate:''};
+
       }
     },
     computed:{
@@ -208,7 +211,7 @@ export default {
                     moneySave+=(this.modalForm.ExamHour-this.expense.StartHour+1)*this.expense.HourTotalDiscount
                 }
                 if (this.rateCode.Worth&&this.modalForm.ExamHour>=this.rateCode.StartHour){
-                    moneySave+=(this.modalForm.ExamHour-this.rateCode.StartHour+1)*this.rateCode.Worth
+                    moneySave+=this.rateCode.Worth
                 }
                 return moneySave;
             }
@@ -231,6 +234,7 @@ export default {
             if (result.success){
                 this.modalForm.Exam_CoachName=result.coach.CoachName;
                 this.standCostMin = this.expense.BasicCost;
+                console.log(this.standCostMin)
                 this.currentStep=1;
             }else{
                 this.$Message.error(result.msg);
@@ -266,7 +270,7 @@ export default {
                   }
 
               }else{
-                 result = await editUser(params);
+
               }
               if (result.success) {
                 this.$Message.success('提交成功!');
@@ -308,7 +312,7 @@ export default {
           }else{
               this.$Message.error(res.msg);
           }
-          console.log( this.RateCode)
+          console.log(this.rateCode)
           this.modalForm_loading=false;
       },
     }
