@@ -74,6 +74,18 @@ export const appRouter = [
         ]
     },
     {
+        path: '/static',
+        icon: 'ios-infinite',
+        name: 'static',
+        access: 0,
+        title: '报表统计',
+        component: Main,
+        children: [
+            { path: 'carTable', title: '教练返利统计',access: 0, name: 'coachRebateTable', icon: 'link', component: resolve => void(require(['@/views/coach_rebate_static/coachRebateTable.vue'],resolve)),},
+            { path: 'coachTable', title: '营业额统计',access: 0, name: 'salesTable', icon: 'link', component: resolve => void(require(['@/views/sales_static/salesTable.vue'],resolve)),},
+        ]
+    },
+    {
         path: '/sys-manage',
         icon: 'ios-infinite',
         name: 'sys-manage',
