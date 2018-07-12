@@ -12,7 +12,7 @@
  <div class="simcardTable">
     <div style="background-color:#B0E0E6;padding:10px 0 0;border-radius:4px;position:relative;">
       <Row>
-       <RadioGroup v-model="searchForm.cusType" type="button" size="large"  @on-change='doChangeCusType' >
+           <RadioGroup v-model="searchForm.cusType" type="button" size="large"  @on-change='doChangeCusType' >
               <Radio label="教练客源"></Radio>
               <Radio label="自然客源"></Radio>
             </RadioGroup>

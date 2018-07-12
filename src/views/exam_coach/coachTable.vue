@@ -68,12 +68,7 @@
         <Button type="error" size="large" long :loading="btnLoading"  @click="comfirmDel">删除</Button>
       </div>
     </Modal>
-      <!--车辆照片-->
-      <Modal title="汇款单凭证" v-model="visible">
-          <img :src="row.RemittanceUrl" v-if="visible" style="width: 100%">
-          <div slot="footer">
-          </div>
-      </Modal>
+
   </div>
 
 </template>

@@ -63,6 +63,12 @@
         <Button type="error" size="large" long :loading="btnLoading"  @click="comfirmDel">删除</Button>
       </div>
     </Modal>
+      <!--车辆照片-->
+      <Modal title="车辆照片" v-model="visible">
+          <img :src="carPhotoSrc" v-if="visible" style="width: 100%">
+          <div slot="footer">
+          </div>
+      </Modal>
   </div>
 
 </template>
@@ -166,6 +172,11 @@
                       attrs: {
                           src: photoSrc
                       },
+                      on: {
+                          click: () => {
+                              this.showPhoto(photoSrc)
+                          }
+                      },
                       style: {
                           width: '60px'
                       }
@@ -258,6 +269,9 @@
         },
         delModal:false,
         delId:'', //删除的Id
+        carPhotoSrc:'',
+        visible:false,
+
       }
     },
     created(){
@@ -327,6 +341,10 @@
           }
           this.btnLoading=false;
       },
+        showPhoto(src){
+          this.visible=true;
+          this.carPhotoSrc = src;
+        },
     }
   }
 

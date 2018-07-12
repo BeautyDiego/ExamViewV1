@@ -12,6 +12,10 @@
   <div class="simcardTable">
     <div style="background-color:#B0E0E6;padding:10px 0 0;border-radius:4px;position:relative;">
       <Row>
+          <RadioGroup v-model="searchForm.cusType" type="button" size="large"  @on-change='doChangeCusType' >
+              <Radio label="教练客源"></Radio>
+              <Radio label="自然客源"></Radio>
+          </RadioGroup>
           <Button class="top-right-btn" size="large" icon="plus" @click="addCar">添加</Button>
 
           <Poptip  width="400" title='搜索' placement="bottom-end" class="top-btn">
@@ -19,13 +23,13 @@
               <div style="text-align:center" slot="content">
                   <Form ref="searchForm" :model="searchForm" :label-width="80"  value=true  style="min-width:200px;padding-top:20px;border-top:1px solid #a3adba;border-bottom:1px solid #a3adba;">
                       <Row>
-                          <Form-item label="用户名称"  >
-                              <Input v-model="searchForm.cus_Name" ></Input>
+                          <Form-item label="教练员名"  >
+                              <Input v-model="searchForm.coachName" ></Input>
                           </Form-item>
                       </Row>
                       <Row>
-                          <Form-item label="流量池编号"  >
-                              <Input v-model="searchForm.pool_Num" ></Input>
+                          <Form-item label="车牌号"  >
+                              <Input v-model="searchForm.carPlate" ></Input>
                           </Form-item>
                       </Row>
                   </Form>
@@ -46,6 +50,7 @@
     </Row>
     <!--&lt;!&ndash;新增编辑&ndash;&gt;-->
     <ordersForm :modalShow="formShow"
+                :parentCusType="searchForm.cusType"
                  :modalFormTitle="formTitle"
                  :parentForm="parentForm"
                  @listenModalForm="hideModel"
@@ -122,30 +127,11 @@
               align:'center',
               title: '自动或手动',
               key: 'Exam_CarType',
-              render: (h, params) => {
-                  let autoTypeTxt = params.row.Exam_CarType===1?'手动挡':'自动挡';
-                  return h('span', autoTypeTxt);
-              }
           },
           {
             align:'center',
             title: '订单状态',
-            key: 'CarStatus',
-              render: (h, params) => {
-                  let OrderStatusTxt = '';
-                  switch(params.row.OrderStatus)
-                  {
-                      case 1:
-                          OrderStatusTxt='考试开始';
-                          break;
-                      case 2:
-                          OrderStatusTxt='考试结束';
-                          break;
-                      default:
-                          OrderStatusTxt='';
-                  }
-                  return h('span', OrderStatusTxt);
-              }
+            key: 'OrderStatus',
           },
           {
             align:'center',
@@ -187,25 +173,25 @@
 //            title: '单小时驾校优惠',
 //            key: 'HourSchoolDiscout',
 //          },
-//          {
-//            title: '操作',
-//            align: 'center',
-//            render: (h, params) => {
-//              let actions=[];
-//              actions.push( h('Button', {
-//                  props: {
-//                      type: 'warning',
-//                      size: 'small'
-//                  },
-//                  style: {
-//                      marginRight: '5px'
-//                  },
-//                  on: {
-//                      click: () => {
-//                          this.editCar(params.row)
-//                      }
-//                  }
-//              }, '修改'));
+          {
+            title: '操作',
+            align: 'center',
+            render: (h, params) => {
+              let actions=[];
+              actions.push( h('Button', {
+                  props: {
+                      type: 'warning',
+                      size: 'small'
+                  },
+                  style: {
+                      marginRight: '5px'
+                  },
+                  on: {
+                      click: () => {
+                          this.printOrder(params.row)
+                      }
+                  }
+              }, '打印'));
 //              actions.push(  h('Button', {
 //                  props: {
 //                      type: 'error',
@@ -220,9 +206,9 @@
 //                      }
 //                  }
 //              }, '删除'));
-//              return h('div', actions);
-//            }
-//          }
+              return h('div', actions);
+            }
+          }
         ],
         tableData: [
         ],
@@ -246,13 +232,11 @@
           Remark:'',
         },
         searchForm:{
-          SimStatus:'全部',
-          PoolNum: '',
-          SimNum: '',
-          CardType:0,//1是单卡，2是流量池成员
+          cusType:'教练客源',
+          coachName:'',
+          carPlate:'',
           rows:10,
           page:1,
-          CardTypeText:'单卡',
         },
         delModal:false,
         delId:'', //删除的Id
@@ -274,6 +258,16 @@
         this.currentPage=1;
         this.getTableList();
       },
+        doChangeCusType(){
+            this.currentPage=1;
+            this.searchForm.coachName='';
+            this.searchForm.carPlate='';
+//            if(this.searchForm.cusType=='教练客源')
+//                this.newTableCols=this.coachColums;
+//            else
+//                this.newTableCols=this.naturalCols;
+            this.getTableList();
+        },
       async getTableList(){
         this.tableLoading=true;
         this.searchForm.page = this.currentPage;
@@ -292,9 +286,9 @@
           this.formTitle='新增订单';
           this.formShow=true;
       },
-      editCar(row){
+        printOrder(row){
         this.parentForm=JSON.parse(JSON.stringify(row));
-        this.formTitle='修改教练车';
+        this.formTitle='打印订单';
         this.formShow=true;
       },
       addFlow(row){

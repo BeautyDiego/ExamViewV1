@@ -53,7 +53,7 @@
           <Form-item label="车牌号" prop="CarPlate" :rules="{required: true, message: '必填,请输入正确的车牌号',min:1,max:10, trigger:'blur',type:'string',pattern:/^([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1})$/}" >
             <Input v-model="modalForm.CarPlate" ></Input>
           </Form-item>
-          <Form-item label="车编号" prop="CarNum" :rules="{required: true, message: '必填,1-6位数字或字母', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{1,6}$/}" >
+          <Form-item label="车编号" prop="CarNum" :rules="{required: true, message: '必填,1-6位数字', trigger:'blur',type:'string',pattern: /^[0-9]{1,6}$/}" >
             <Input v-model="modalForm.CarNum" ></Input>
           </Form-item>
           <Form-item  label="车架号" prop="CarFrame"  :rules="{required: true, message: '必填,6-20位数字或字母', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,20}$/}" >
@@ -129,6 +129,12 @@
       <Button type="primary"  :loading="modalForm_loading" @click="saveForm('modalForm')">保存</Button>
     </div>
   </Modal>
+  <!--车辆照片-->
+  <Modal title="车辆照片" v-model="PicVisible">
+    <img :src="UpLoadURL_PREFIX+modalForm.CarPhoto" v-if="PicVisible" style="width: 100%">
+    <div slot="footer">
+    </div>
+  </Modal>
 </div>
 
 </template>
@@ -176,7 +182,8 @@ export default {
           PlateColorCombo:[{key:1,value:'黄牌'},{key:2,value:'蓝牌'}],
           Headers:{
               Authorization:sessionStorage.getItem("token")
-          }
+          },
+          PicVisible:false,
         }
     },
     watch:{
