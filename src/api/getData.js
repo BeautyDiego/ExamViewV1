@@ -154,6 +154,11 @@ export const validateCoachMobile = data => fetch('/Exam_Coach/Validate_Exam_Coac
 export const getRateCode = data => fetch('/Exam_RateCode/Get_Exam_RateCode', data, 'POST');
 export const getExamOrderList = data => fetch('/Exam_Orders/List_Exam_Orders', data, 'POST')
 export const addExamOrder = data => fetch('/Exam_Orders/Add_Exam_Orders', data, 'POST')
+export const getSalesStatic = data => fetch('/Exam_Orders/GetSalesStatic', data, 'POST')
+export const getCoachRebate = data => fetch('/Exam_Orders/GetCoachRebate', data, 'POST')
+export const getCoachRebateExcel = data => fetch('/Exam_Orders/GetCoachRebateExcel', data, 'POST')
+export const getSalesStaticExcel = data => fetch('/Exam_Orders/GetSalesStaticExcel', data, 'POST')
+
 // endregion
 
 

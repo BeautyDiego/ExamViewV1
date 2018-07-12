@@ -9,37 +9,14 @@
 
 <template>
 
-    <div class="simcardTable">
+    <div class="salesTable">
         <div style="background-color:#B0E0E6;padding:10px 0 0;border-radius:4px;position:relative;">
             <Row>
-                <Button class="top-right-btn" size="large" icon="plus" @click="addCar">添加</Button>
+              <Button class="top-right-btn" size="large" icon="plus" @click="toExcel">导出EXCEL</Button>
+            
+                <Button  class="top-right-btn" type="primary" icon="ios-search" size="large"  @click="doSearchTableList">搜  索</Button>
+             <DatePicker  class="top-right-btn" type="daterange" :clearable="true" :options="options2" v-model="searchForm.ranges" placement="bottom-end" placeholder="请选择日期" style="width: 200px"></DatePicker>  
 
-                <Poptip  width="400" title='搜索' placement="bottom-end" class="top-btn">
-                    <Button type="primary" icon="ios-search" size="large" >搜  索</Button>
-                    <div style="text-align:center" slot="content">
-                        <Form ref="searchForm" :model="searchForm" :label-width="80"  value=true  style="min-width:200px;padding-top:20px;border-top:1px solid #a3adba;border-bottom:1px solid #a3adba;">
-                            <Row>
-                                <Form-item label="教练名"  >
-                                    <Input v-model="searchForm.coach_Name" ></Input>
-                                </Form-item>
-                            </Row>
-                            <Row>
-                                <Form-item label="手机号"  >
-                                    <Input v-model="searchForm.coach_mobile" ></Input>
-                                </Form-item>
-                            </Row>
-                            <Row>
-                                <Form-item label="所属驾校"  >
-                                    <Input v-model="searchForm.school" ></Input>
-                                </Form-item>
-                            </Row>
-                        </Form>
-                        <Row >
-                            <Button  style="margin-left:5px;margin-top:10px;float:right;background-color: #5bc0de;color:#fff" size="small"   @click="doSearchTableList">确定</Button>
-                            <Button  style="float:right;margin-top:10px;" size="small" @click="resetSearch" >重置</Button>
-                        </Row>
-                    </div>
-                </Poptip>
             </Row>
         </div>
         <!--table-->
@@ -49,112 +26,98 @@
         <Row>
             <Page :total="total" :current="currentPage" @on-change="changeCurrentPage" show-total style="float:right;margin-top:10px"></Page>
         </Row>
-        <!--是否删除框-->
-        <Modal v-model="delModal" width="360">
-            <p slot="header" style="color:#f60;text-align:center">
-                <Icon type="information-circled"></Icon>
-                <span>删除确认</span>
-            </p>
-            <div style="text-align:center">
-                <p>是否继续删除？</p>
-            </div>
-            <div slot="footer">
-                <Button type="error" size="large" long :loading="btnLoading"  @click="comfirmDel">删除</Button>
-            </div>
-        </Modal>
+
+
 
     </div>
 
 </template>
 
 <script>
-    import {getExamCoachList,deleteExamCoach} from './../../api/getData'
+    import {getCoachRebate,getCoachRebateExcel} from './../../api/getData'
     import {clearObj} from './../../libs/util';
     export default {
-        name:'coachRebateTable',
+        name:'salesTable',
         data() {
             return {
                 tableLoading:false,//table是否在加载中
                 tableColums: [
                     {
                         align:'center',
-                        title: '教练名',
-                        key: 'CoachName',
+                        title: '教练员姓名',
+                        key: 'CoachName'
                     },
-                    {
+
+                   {
                         align:'center',
-                        title: '电话',
+                        title: '教练员手机号',
                         key: 'CoachMobile',
                     },
                     {
                         align:'center',
-                        title: '所属驾校',
-                        key: 'DrivingSchName',
+                        title: '考试时长(小时)',
+                        key: 'TotalHour',
                     },
                     {
                         align:'center',
-                        title: '备注',
-                        key: 'Remark',
+                        title: '营业额',
+                        key: 'TotalCost',
+                        render: (h, params) => { return   params.row.TotalCost!=null?'￥'+params.row.TotalCost.toFixed(2):''  ;}
                     },
                     {
-                        title: '操作',
-                        align: 'center',
-                        render: (h, params) => {
-                            let actions=[];
-                            actions.push( h('Button', {
-                                props: {
-                                    type: 'warning',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.editCoach(params.row)
-                                    }
-                                }
-                            }, '修改'));
-                            actions.push(  h('Button', {
-                                props: {
-                                    type: 'error',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.delCoach(params.row.Id)
-                                    }
-                                }
-                            }, '删除'));
-                            return h('div', actions);
-                        }
-                    }
+                        align:'center',
+                        title: '成本',
+                        key: 'TotalBasicCost',
+                        render: (h, params) => { return   params.row.TotalBasicCost!=null?'￥'+params.row.TotalBasicCost.toFixed(2):''  ;}
+                    },
+                    {
+                        align:'center',
+                        title: '教练返利',
+                        key: 'TotalRebate',
+                        render: (h, params) => { return   params.row.TotalRebate!=null?'￥'+params.row.TotalRebate.toFixed(2):''  ;}
+                    }, 
                 ],
                 tableData: [
                 ],
                 total:0,
                 currentPage:1,
-                formShow:false,
-                formTitle:'添加教练员',
-                parentForm:{
-                    Id:'',
-                    CoachName: '',
-                    CoachMobile: '',
-                    DrivingSchName: '',
-                    Remark: '',
-                },
+
                 searchForm:{
-                    coach_Name: '',
-                    coach_mobile:'',
-                    school: '',
                     rows:10,
                     page:1,
+                    ranges:[new Date(),new Date()],
                 },
-                delModal:false,
-                delId:'', //删除的Id
+                options2: {
+                    shortcuts: [
+                        {
+                            text: '近一周',
+                            value () {
+                                const end = new Date();
+                                const start = new Date();
+                                start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                                return [start, end];
+                            }
+                        },
+                        {
+                            text: '本月',
+                            value () {
+                                const end = new Date();
+                                const start = new Date();
+                                start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                                return [start, end];
+                            }
+                        },
+                        {
+                            text: '近3个月',
+                            value () {
+                                const end = new Date();
+                                const start = new Date();
+                                start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                                return [start, end];
+                            }
+                        }
+                    ]
+                }
             }
         },
         created(){
@@ -164,61 +127,39 @@
             this.getTableList();
         },
         methods: {
-            resetSearch(){
-                this.searchForm.PoolNum='';
-                this.searchForm.SimNum='';
-                this.searchForm.SimStatus='全部';
-            },
             doSearchTableList(){
                 this.currentPage=1;
                 this.getTableList();
             },
             async getTableList(){
-                this.tableLoading=true;
-                this.searchForm.page = this.currentPage;
-                const params = this.searchForm;
-                const res = await getExamCoachList(params);
-                this.total = res.total;
-                this.tableData = res.rows;
-                this.tableLoading=false;
+                if(this.searchForm.ranges[0]&&this.searchForm.ranges[1]){
+                    this.searchForm.page = this.currentPage;
+                    console.log(this.searchForm);
+                    this.tableLoading=true;              
+                    const res = await getCoachRebate({start:this.searchForm.ranges[0],end:this.searchForm.ranges[1],page:this.searchForm.page,rows:this.searchForm.rows});
+                    this.total = res.total;
+                    this.tableData = res.rows;
+                    this.tableLoading=false;
+                }else{
+                    this.$Message.error('请选择查询时间段！');
+                }
             },
             changeCurrentPage(num){
                 this.currentPage=num;
                 this.getTableList();
             },
-            addCar(){
-                clearObj(this.parentForm);
-                this.formTitle='添加教练员';
-                this.formShow=true;
+            handleChange (date) {
+                
             },
-            editCoach(row){
-                this.parentForm=JSON.parse(JSON.stringify(row));
-                this.formTitle='修改教练员';
-                this.formShow=true;
-            },
-            hideModel(){
-                this.formShow=false;
-            },
-            delCoach(Id){
-                this.delId=Id;
-                this.delModal=true;
-            },
-            async comfirmDel(){
-                this.btnLoading=true;
-                try{
-                    const res= await delUser({Id:this.delId});
-                    if (res.success) {
-                        this.$Message.success('删除成功!');
-                        this.getTableList();
-                        this.delModal=false;
-                    }else{
-                        this.$Message.error(res.msg);
-                    }
-                }catch(err){
-                    console.log(err);
-                    this.$Message.error('服务器异常，稍后再试');
+            async toExcel () {
+                const res = await getCoachRebateExcel({start:this.searchForm.ranges[0],end:this.searchForm.ranges[1]});
+                if(res.success){
+                    const url= this.UpLoadURL_PREFIX+"/excel/"+res.filename;
+                    console.log(url);
+                    window.open(url); 
+                }else{
+
                 }
-                this.btnLoading=false;
             },
         }
     }
