@@ -1,7 +1,15 @@
+<style scoped>
+    i,span{
+        vertical-align:middle;
+    }
+</style>
+
 <template>
     <div>
-        <p :class="className" :style="{textAlign: 'center', color: color, fontSize: countSize, fontWeight: countWeight}"><span v-cloak :id="idName">{{ startVal }}</span><span>{{ unit }}</span></p>
+        <Icon :type="iconType" :size="iconSize" :color="iconColor" style="margin-right:10px;"></Icon>
         <slot name="intro"></slot>
+        <span :class="className" :style="{textAlign: 'center', color: color, fontSize: countSize, fontWeight: countWeight}"><span v-cloak :id="idName">{{ startVal }}</span><span>{{ unit }}</span> </span>
+        <slot name="unit"></slot>
     </div>
 </template>
 
@@ -38,6 +46,9 @@ export default {
     },
     name: 'countUp',
     props: {
+        iconType: String,
+        iconSize: String,
+        iconColor: String,
         idName: String,
         className: String,
         startVal: {

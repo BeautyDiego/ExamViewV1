@@ -3,29 +3,22 @@
 </style>
 
 <template>
-    <Card :padding="0">
-        <div class="infor-card-con">
-            <Col class="infor-card-icon-con" :style="{backgroundColor: color, color: 'white'}" span="8">
-                <Row class="height-100" type="flex" align="middle" justify="center">
-                    <Icon :type="iconType" :size="iconSize"></Icon>
-                </Row>
-            </Col>
-            <Col span="16" class="height-100">
-                <Row type="flex" align="middle" justify="center" class="height-100">
-                    <count-up 
-                        class="infor-card-count user-created-count" 
-                        :id-name="idName" 
-                        :end-val="endVal" 
-                        :color="color"
-                        :countSize="countSize"
-                        :countWeight="countWeight"
-                    >
-                        <p class="infor-intro-text" slot="intro">{{ introText }}</p>
-                    </count-up>
-                </Row>
-            </Col>
-        </div>
-    </Card>
+    <div class="infor-card-con">
+            <count-up
+                class="infor-card-count user-created-count"
+                :iconType="iconType"
+                :iconSize="iconSize"
+                :iconColor="iconColor"
+                :id-name="idName"
+                :end-val="endVal"
+                :color="color"
+                :countSize="countSize"
+                :countWeight="countWeight"
+            >
+            <span class="infor-intro-text" slot="intro">{{ introText }}</span>
+            <span class="infor-intro-text" slot="unit">{{ unitText }}</span>
+                </count-up>
+    </div>
 </template>
 
 <script>
@@ -40,15 +33,17 @@ export default {
         idName: String,
         endVal: Number,
         color: String,
+        iconColor: String,
         iconType: String,
         introText: String,
+        unitText: String,
         countSize: {
             type: String,
             default: '30px'
         },
         countWeight: {
             type: Number,
-            default: 700
+            default: 100
         },
         iconSize: {
             type: Number,

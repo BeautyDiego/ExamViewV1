@@ -1,11 +1,11 @@
 <template>
-    <div style="width:100%;height:100%;" id="visite_volume_con"></div>
+    <div style="width:100%;height:100%;" id="coachRebateLine"></div>
 </template>
 
 <script>
 import echarts from 'echarts';
 export default {
-    name: 'visiteVolume',
+    name: 'coachRebateLine',
     data () {
         return {
             //
@@ -13,7 +13,7 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
-            let visiteVolume = echarts.init(document.getElementById('visite_volume_con'));
+            let coachRebateLine = echarts.init(document.getElementById('coachRebateLine'));
             let xAxisData = [];
             let data1 = [];
             let data2 = [];
@@ -43,7 +43,7 @@ export default {
                 },
                 yAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
+                    data: ['赵子龙', '关云长', '曹孟德', '吕奉先', '刘玄德'],
                     nameTextStyle: {
                         color: '#c3c3c3'
                     }
@@ -52,23 +52,22 @@ export default {
                     {
                         name: '访问量',
                         type: 'bar',
+                        barWidth: 25,
                         data: [
-                            {value: 453682, name: 'Mon', itemStyle: {normal: {color: '#2d8cf0'}}},
-                            {value: 879545, name: 'Tues', itemStyle: {normal: {color: '#2d8cf0'}}},
-                            {value: 2354678, name: 'Wed', itemStyle: {normal: {color: '#2d8cf0'}}},
-                            {value: 1598403, name: 'Thur', itemStyle: {normal: {color: '#2d8cf0'}}},
-                            {value: 543250, name: 'Fri', itemStyle: {normal: {color: '#2d8cf0'}}},
-                            {value: 1305923, name: 'Sat', itemStyle: {normal: {color: '#2d8cf0'}}},
-                            {value: 1103456, name: 'Sun', itemStyle: {normal: {color: '#2d8cf0'}}}
+                            {value: 5432, name: '赵子龙',  itemStyle: {normal: {color: '#d8f1ed'}}},
+                            {value: 3598, name: '关云长', itemStyle: {normal: {color: '#a8cbcf'}}},
+                            {value: 2100, name: '曹孟德', itemStyle: {normal: {color: '#479585'}}},
+                            {value: 1321, name: '吕奉先', itemStyle: {normal: {color: '#01b750'}}},
+                            {value: 998, name: '刘玄德', itemStyle: {normal: {color: '#00923f'}}}
                         ]
                     }
                 ]
             };
 
-            visiteVolume.setOption(option);
+            coachRebateLine.setOption(option);
 
             window.addEventListener('resize', function () {
-                visiteVolume.resize();
+                coachRebateLine.resize();
             });
         });
     }

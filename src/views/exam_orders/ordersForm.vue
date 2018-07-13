@@ -176,6 +176,8 @@ export default {
               BasicCost:'',
               HourTotalDiscount:'',
               HourSchoolDiscout:'',
+              TotalDiscount:'',
+              SchoolDiscout:'',
               RateCode:'',
               RateCodeWorth:'',
           },
@@ -231,6 +233,18 @@ export default {
               return 0;
           }
       },
+        //驾校 给省的钱
+        schoolSaveMoney:function () {
+            if (this.modalForm.CusType==='教练客源'){
+                let moneySave=0;
+                if (this.modalForm.ExamHour>=this.expense.StartHour){
+                    moneySave+=(this.modalForm.ExamHour-this.expense.StartHour+1)*this.expense.HourSchoolDiscout
+                }
+                return moneySave;
+            }else{
+                return 0;
+            }
+        },
         saveMoney:function () {
             if (this.modalForm.CusType==='教练客源'){
                 let moneySave=0;
@@ -285,10 +299,13 @@ export default {
               if (this.modalFormTitle ==='新增订单'){
                   if (this.validateOrder()){
                       if (this.IsCoachSource){ // 是教练客源
+                          this.modalForm.BasicCost = this.expense.BasicCost*this.modalForm.ExamHour; //算出总成本
                           this.modalForm.CoachPrice = this.modalForm.CostPerHour;
                           this.modalForm.TotalCost = this.orderOriginAmount-this.saveMoney;
                           this.modalForm.HourTotalDiscount = this.expense.HourTotalDiscount;
                           this.modalForm.HourSchoolDiscout = this.expense.HourSchoolDiscout;
+                          this.TotalDiscount=this.saveMoney; // 总的优惠的价格
+                          this.TotalShoolDiscount=this.schoolSaveMoney; // 驾校优惠的价格
                       }else{
                           this.modalForm.BasicCost = this.expense.BasicCost;
                           this.modalForm.TotalCost = this.orderOriginAmount-this.saveMoney;
