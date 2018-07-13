@@ -70,12 +70,12 @@ export function getLodop(oOBJECT,oEMBED){
                  return;
             } else {
 
-	         if (CLODOP.CVERSION<"3.0.4.3") { 
+	         if (CLODOP.CVERSION<"3.0.4.3") {
 			if (isIE) document.write(strCLodopUpdate); else
 			document.body.innerHTML=strCLodopUpdate+document.body.innerHTML;
 		 };
 		 if (oEMBED && oEMBED.parentNode) oEMBED.parentNode.removeChild(oEMBED);
-		 if (oOBJECT && oOBJECT.parentNode) oOBJECT.parentNode.removeChild(oOBJECT);	
+		 if (oOBJECT && oOBJECT.parentNode) oOBJECT.parentNode.removeChild(oOBJECT);
 	    };
         } else {
             var is64IE  = isIE && (navigator.userAgent.indexOf('x64')>=0);
@@ -113,9 +113,11 @@ export function getLodop(oOBJECT,oEMBED){
             return LODOP;
         };
         //===如下空白位置适合调用统一功能(如注册语句、语言选择等):===
-
+        LODOP.SET_LICENSES("湖北微驾技术有限公司", "75E17E25AB0D6481ECABD05CE0AB385C", "", "");
         //===========================================================
+
         return LODOP;
     } catch(err) {alert("getLodop出错:"+err);};
 };
+
 

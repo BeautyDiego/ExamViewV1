@@ -161,5 +161,13 @@ export const getSalesStaticExcel = data => fetch('/Exam_Orders/GetSalesStaticExc
 
 // endregion
 
+// region 首页
+export const getTodayStatic = data => fetch('/Home/GetTodayStatic', data, 'POST')
+export const getCarStatusGroup = data => fetch('/Home/GetCarStatusGroup', data, 'POST')
+export const getOtherStatic = data => fetch('/Home/GetOtherStatic', data, 'POST')
+export const getCoachRebateTopFive = data => fetch('/Home/CoachRebateTopFive', data, 'POST')
+export const getCusResource = data => fetch('/Home/CusTypeRencetSenven', data, 'POST')
+// endregion
+
 
 

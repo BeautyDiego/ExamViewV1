@@ -299,7 +299,17 @@ export default {
               if (this.modalFormTitle ==='新增订单'){
                   if (this.validateOrder()){
                       if (this.IsCoachSource){ // 是教练客源
-                          this.modalForm.BasicCost = this.expense.BasicCost*this.modalForm.ExamHour; //算出总成本
+                          if (this.modalForm.CostPerHour<=this.expense.BasicCost){
+                              this.$Message.error('每小时价格不得低于成本价');
+                              this.modalForm_loading=false;
+                              return
+                          }
+                          if (this.modalForm.ExamHour>=this.expense.StartHour){
+                              this.modalForm.BasicCost = this.expense.BasicCost*(this.expense.StartHour-1)+this.expense.DiscountBasicCost*(this.modalForm.ExamHour-this.expense.StartHour+1); //算出总成本
+                          }else{
+                              this.modalForm.BasicCost = this.expense.BasicCost*(this.expense.StartHour-1)
+                          }
+
                           this.modalForm.CoachPrice = this.modalForm.CostPerHour;
                           this.modalForm.TotalCost = this.orderOriginAmount-this.saveMoney;
                           this.modalForm.HourTotalDiscount = this.expense.HourTotalDiscount;
@@ -370,8 +380,8 @@ export default {
       },
       printOrder(){
           this.CreateOneFormPage();
-//        LODOP.PRINT();
-          LODOP.PREVIEW();
+          LODOP.PRINT();
+        //  LODOP.PREVIEW();
 
       },
         CreateOneFormPage() {
@@ -379,26 +389,26 @@ export default {
             LODOP.PRINT_INITA(0, 0, 230, 230, "订单详情");
             LODOP.SET_PRINT_STYLE("FontSize", 8);
             LODOP.SET_PRINT_STYLE("Bold", 1);
-            LODOP.ADD_PRINT_TEXT(110, 10, 230, 20, "订单编号："+this.order.OrderNum);
-            LODOP.ADD_PRINT_TEXT(130, 10, 230, 20, "客源："+this.order.CusType);
+            LODOP.ADD_PRINT_TEXT(20, 10, 230, 20, "订单编号："+this.order.OrderNum);
+            LODOP.ADD_PRINT_TEXT(40, 10, 230, 20, "客源："+this.order.CusType);
             if (this.IsCoachSource){
-                LODOP.ADD_PRINT_TEXT(150, 10, 230, 20, "教练员："+this.order.Exam_CoachName);
-                LODOP.ADD_PRINT_TEXT(170, 10, 230, 20, "教练手机："+this.order.Exam_CoachMobile);
-                LODOP.ADD_PRINT_TEXT(190, 10, 230, 20, "车牌："+this.order.Exam_CarPlate);
-                LODOP.ADD_PRINT_TEXT(210, 10, 230, 20, "车号："+this.order.Exam_CarNum);
-                LODOP.ADD_PRINT_TEXT(230, 10, 230, 20, "车类型："+this.order.Exam_CarType);
-                LODOP.ADD_PRINT_TEXT(250, 10, 230, 20, "学习时长："+this.order.ExamHour+"小时");
-                LODOP.ADD_PRINT_TEXT(270, 10, 230, 20, "开始时间："+this.order.ExamStart);
-                LODOP.ADD_PRINT_TEXT(290, 10, 230, 20, "结束时间："+this.order.ExamEnd);
-                LODOP.ADD_PRINT_TEXT(310, 10, 230, 20, "订单金额：￥"+this.order.TotalCost);
+                LODOP.ADD_PRINT_TEXT(60, 10, 230, 20, "教练员："+this.order.Exam_CoachName);
+                LODOP.ADD_PRINT_TEXT(80, 10, 230, 20, "教练手机："+this.order.Exam_CoachMobile);
+                LODOP.ADD_PRINT_TEXT(100, 10, 230, 20, "车牌："+this.order.Exam_CarPlate);
+                LODOP.ADD_PRINT_TEXT(120, 10, 230, 20, "车号："+this.order.Exam_CarNum);
+                LODOP.ADD_PRINT_TEXT(140, 10, 230, 20, "车类型："+this.order.Exam_CarType);
+                LODOP.ADD_PRINT_TEXT(160, 10, 230, 20, "学习时长："+this.order.ExamHour+"小时");
+                LODOP.ADD_PRINT_TEXT(180, 10, 230, 20, "开始时间："+this.order.ExamStart);
+                LODOP.ADD_PRINT_TEXT(200, 10, 230, 20, "结束时间："+this.order.ExamEnd);
+                LODOP.ADD_PRINT_TEXT(220, 10, 230, 20, "订单金额：￥"+this.order.TotalCost);
             }else{
-                LODOP.ADD_PRINT_TEXT(150, 10, 230, 20, "车牌："+this.order.Exam_CarPlate);
-                LODOP.ADD_PRINT_TEXT(170, 10, 230, 20, "车号："+this.order.Exam_CarNum);
-                LODOP.ADD_PRINT_TEXT(190, 10, 230, 20, "车类型："+this.order.Exam_CarType);
-                LODOP.ADD_PRINT_TEXT(210, 10, 230, 20, "学习时长："+this.order.ExamHour+"小时");
-                LODOP.ADD_PRINT_TEXT(230, 10, 230, 20, "开始时间："+this.order.ExamStart);
-                LODOP.ADD_PRINT_TEXT(250, 10, 230, 20, "结束时间："+this.order.ExamEnd);
-                LODOP.ADD_PRINT_TEXT(270, 10, 230, 20, "订单金额：￥"+this.order.TotalCost);
+                LODOP.ADD_PRINT_TEXT(60, 10, 230, 20, "车牌："+this.order.Exam_CarPlate);
+                LODOP.ADD_PRINT_TEXT(80, 10, 230, 20, "车号："+this.order.Exam_CarNum);
+                LODOP.ADD_PRINT_TEXT(100, 10, 230, 20, "车类型："+this.order.Exam_CarType);
+                LODOP.ADD_PRINT_TEXT(120, 10, 230, 20, "学习时长："+this.order.ExamHour+"小时");
+                LODOP.ADD_PRINT_TEXT(140, 10, 230, 20, "开始时间："+this.order.ExamStart);
+                LODOP.ADD_PRINT_TEXT(160, 10, 230, 20, "结束时间："+this.order.ExamEnd);
+                LODOP.ADD_PRINT_TEXT(180, 10, 230, 20, "订单金额：￥"+this.order.TotalCost);
             }
 
 

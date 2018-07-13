@@ -51,32 +51,47 @@
             <tbody>
                <tr>
                    <td style="color:#b9b9b9;word-wrap: break-word;">营业额</td>
-                   <td>￥255.3</td>
-                   <td>￥255.3</td>
-                   <td>￥255.3</td>
+                   <td>￥{{dataResource.TodaySales}}</td>
+                   <td>￥{{dataResource.WeekSales}}</td>
+                   <td>￥{{dataResource.MonthSales}}</td>
                </tr>
                <tr>
                    <td style="color:#b9b9b9;">考试人数</td>
-                   <td>255.3人</td>
-                   <td>255.3人</td>
-                   <td>255.3人</td>
+                   <td>{{dataResource.TodayExamedNum}}人</td>
+                   <td>{{dataResource.WeekExamedNum}}人</td>
+                   <td>{{dataResource.MonthExamedNum}}人</td>
                </tr>
             </tbody>
         </table>
         <div id="text-bottom">
             <span style="font-size: 20px;color:#4faf76;font-weight: bold;">本月累计总考试时长:</span>
             <div style="float:right;margin-top: -5px;">
-                <span style="color:#ff8319;font-size: 24px;font-weight: bold;">256.4</span><span style="color:#b8d2d8;">小时</span>
+                <span style="color:#ff8319;font-size: 24px;font-weight: bold;position:relative;top:3px;margin:0 3px;">{{dataResource.MonthExamHour}}</span><span style="color:#b8d2d8;">小时</span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {getOtherStatic} from './../../../api/getData'
 export default {
     name: 'otherStaticTable',
-    mounted () {
+    data () {
+        return {
+            dataResource:{WeekSales:0,WeekExamedNum:0,MonthExamedNum:0,MonthSales:0,MonthExamHour:0,TodayExamedNum:0,TodaySales:0},
+        };
+    },
+    computed:{
 
-    }
+    },
+    mounted () {
+        this.getOtherStaticTabel();
+    },
+    methods: {
+        async getOtherStaticTabel(){
+            let res = await getOtherStatic();
+            this.dataResource=res[0];
+        },
+    },
 };
 </script>

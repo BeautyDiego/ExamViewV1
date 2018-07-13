@@ -4,72 +4,100 @@
 
 <script>
 import echarts from 'echarts';
+import {getCoachRebateTopFive} from './../../../api/getData'
 export default {
     name: 'coachRebateLine',
     data () {
         return {
-            //
+            rebateList:[{Exam_CoachName:'',RebateMoney:0}],
         };
     },
+    created(){
+
+
+    },
     mounted () {
-        this.$nextTick(() => {
-            let coachRebateLine = echarts.init(document.getElementById('coachRebateLine'));
-            let xAxisData = [];
-            let data1 = [];
-            let data2 = [];
-            for (let i = 0; i < 20; i++) {
-                xAxisData.push('类目' + i);
-                data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-                data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
-            }
+         this.getCoachRebate();
 
-            const option = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                grid: {
-                    top: 0,
-                    left: '2%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value',
-                    boundaryGap: [0, 0.01]
-                },
-                yAxis: {
-                    type: 'category',
-                    data: ['赵子龙', '关云长', '曹孟德', '吕奉先', '刘玄德'],
-                    nameTextStyle: {
-                        color: '#c3c3c3'
-                    }
-                },
-                series: [
-                    {
-                        name: '访问量',
-                        type: 'bar',
-                        barWidth: 25,
-                        data: [
-                            {value: 5432, name: '赵子龙',  itemStyle: {normal: {color: '#d8f1ed'}}},
-                            {value: 3598, name: '关云长', itemStyle: {normal: {color: '#a8cbcf'}}},
-                            {value: 2100, name: '曹孟德', itemStyle: {normal: {color: '#479585'}}},
-                            {value: 1321, name: '吕奉先', itemStyle: {normal: {color: '#01b750'}}},
-                            {value: 998, name: '刘玄德', itemStyle: {normal: {color: '#00923f'}}}
-                        ]
-                    }
-                ]
-            };
 
-            coachRebateLine.setOption(option);
+    },
+    methods: {
+        initEchats(){
+             this.$nextTick(() => {
 
-            window.addEventListener('resize', function () {
-                coachRebateLine.resize();
-            });
-        });
-    }
+                 let coachRebateLine = echarts.init(document.getElementById('coachRebateLine'));
+                 let colorArr = ['#00923f','#01b750', '#479585','#a8cbcf','#d8f1ed'];
+                 let seriesData = [];
+                 let yAxisData=[];
+                 let len=this.rebateList.length;
+                 for (let i = 0; i < len; i++) {
+                     let item=this.rebateList[i];
+                     seriesData.push({
+                         name:item.Exam_CoachName,
+                         value:item.RebateMoney,
+                         itemStyle: {
+                             normal: {
+                                 color: colorArr[len-i]
+                                 },
+                                 label: {
+                                     show: true,
+                                     positiion:'right',
+                                     formatter: item.RebateMoney
+                                 }
+                             }
+                      });
+                 yAxisData.push(item.Exam_CoachName);
+                 }
+                 console.log(seriesData);
+
+                 const option = {
+                     tooltip: {
+                         trigger: 'axis',
+                         axisPointer: {
+                             type: 'shadow'
+                         }
+                     },
+                     grid: {
+                         top: 0,
+                         left: '2%',
+                         right: '4%',
+                         bottom: '3%',
+                         containLabel: true
+                     },
+                     xAxis: {
+                         type: 'value',
+                         boundaryGap: [0, 0.01]
+                     },
+                     yAxis: {
+                         type: 'category',
+                         data: yAxisData,
+                         nameTextStyle: {
+                             color: '#c3c3c3'
+                         }
+                     },
+                     series: [
+                         {
+                             name: '返利金额',
+                             type: 'bar',
+                             barWidth: 25,
+                             data:seriesData
+                         }
+                     ]
+                 };
+
+                 coachRebateLine.setOption(option);
+
+                 window.addEventListener('resize', function () {
+                     coachRebateLine.resize();
+                 });
+
+             });
+
+        },
+        async getCoachRebate(){
+            this.rebateList= await getCoachRebateTopFive();
+            this.initEchats()
+        },
+    },
 };
 </script>

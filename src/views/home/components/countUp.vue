@@ -8,7 +8,7 @@
     <div>
         <Icon :type="iconType" :size="iconSize" :color="iconColor" style="margin-right:10px;"></Icon>
         <slot name="intro"></slot>
-        <span :class="className" :style="{textAlign: 'center', color: color, fontSize: countSize, fontWeight: countWeight}"><span v-cloak :id="idName">{{ startVal }}</span><span>{{ unit }}</span> </span>
+        <span :class="className" :style="{textAlign: 'center', color: color, fontSize: countSize, fontWeight: countWeight}"><span style="margin: 0 10px; position: relative;top: -3px;"><span v-cloak :id="idName" >{{ startVal }}</span><span>{{ unit }}</span></span> </span>
         <slot name="unit"></slot>
     </div>
 </template>

@@ -12,7 +12,7 @@
                     <Col span="6">
                     <infor-card
                             id-name="user_created_count"
-                            :end-val="count.createUser"
+                            :end-val="count.ExamTotalHour"
                             iconType="clock"
                             color="#ff7801"
                             iconColor="#d7d7d7"
@@ -24,7 +24,7 @@
                     <Col span="6">
                     <infor-card
                             id-name="visit_count"
-                            :end-val="count.visit"
+                            :end-val="count.TodaySales"
                             iconType="arrow-graph-up-right"
                             color="#ff7801"
                             iconSize="35"
@@ -36,7 +36,7 @@
                     <Col span="6">
                     <infor-card
                             id-name="collection_count"
-                            :end-val="count.collection"
+                            :end-val="count.TodayExamedCount"
                             iconType="ios-people"
                             color="#ff7801"
                             iconSize="35"
@@ -48,7 +48,7 @@
                     <Col span="6">
                     <infor-card
                             id-name="transfer_count"
-                            :end-val="count.transfer"
+                            :end-val="count.TodayExamingCount"
                             iconType="person-stalker"
                             color="#ff7801"
                             iconSize="30"
@@ -124,8 +124,6 @@
 </template>
 
 <script>
-import cityData from './map-data/get-city-value.js';
-import homeMap from './components/map.vue';
 import carCircle from './components/carCircle.vue';
 import coachRebateLine from './components/coachRebateLine.vue';
 import cusResource from './components/cusResource.vue';
@@ -133,11 +131,11 @@ import otherStaticTable from './components/otherStaticTable.vue';
 import countUp from './components/countUp.vue';
 import inforCard from './components/inforCard.vue';
 import calendar from './components/calendar.vue';
+import {getTodayStatic} from './../../api/getData'
 
 export default {
     name: 'home',
     components: {
-        homeMap,
         carCircle,
         coachRebateLine,
         cusResource,
@@ -149,14 +147,11 @@ export default {
     data () {
         return {
             count: {
-                createUser: 496,
-                visit: 326,
-                collection: 243,
-                transfer: 395
+                ExamTotalHour: 496,
+                TodaySales: 326,
+                TodayExamedCount: 243,
+                TodayExamingCount: 395
             },
-            cityData: cityData,
-            showAddNewTodo: false,
-            newToDoItemValue: '',
         };
     },
     computed: {
@@ -164,27 +159,19 @@ export default {
             return localStorage.avatorImgPath;
         }
     },
+    created(){
+
+    },
+    mounted(){
+        this.getInfoCardData();
+    },
     methods: {
-        addNewToDoItem () {
-            this.showAddNewTodo = true;
-        },
-        addNew () {
-            if (this.newToDoItemValue.length !== 0) {
-                this.toDoList.unshift({
-                    title: this.newToDoItemValue
-                });
-                setTimeout(() => {
-                    this.newToDoItemValue = '';
-                }, 200);
-                this.showAddNewTodo = false;
-            } else {
-                this.$Message.error('请输入待办事项内容');
-            }
-        },
-        cancelAdd () {
-            this.showAddNewTodo = false;
-            this.newToDoItemValue = '';
-        }
+       async getInfoCardData(){
+           let res = await getTodayStatic();
+           this.count =  res[0]
+       },
+
+
     }
 };
 </script>
