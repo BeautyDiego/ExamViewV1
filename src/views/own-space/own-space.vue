@@ -24,14 +24,9 @@
                         <span>{{ userForm.loginName }}</span>
                     </FormItem>
                     <FormItem label="用户手机："  >
-<<<<<<< HEAD
                         <span>{{ userForm.cellphone }}</span>
                     </FormItem>
-=======
-                        <span>{{ userForm.ManagerMobile }}</span>
-                    </FormItem>
 
->>>>>>> 1374ea5d9421292661d250045888ce16646fc678
                     <FormItem label="">
                         <Button type="warning" @click="showEditPassword">修改密码</Button>
                     </FormItem>
