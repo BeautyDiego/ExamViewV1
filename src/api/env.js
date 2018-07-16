@@ -10,8 +10,8 @@ let baseUrl = 'http://localhost:24344'
 let frontWebUrl = 'http://localhost:8080'
 
 if (process.env.NODE_ENV === 'production') {
-  baseUrl = 'http://120.79.130.11:8211'
-  frontWebUrl = 'http://120.79.130.11:8210'
+  baseUrl = 'http://112.74.42.29:8211'
+  frontWebUrl = 'http://112.74.42.29:8210'
 }
 
 

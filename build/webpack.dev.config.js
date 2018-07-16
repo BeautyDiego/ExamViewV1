@@ -29,7 +29,7 @@ module.exports = merge(webpackBaseConfig, {
             minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
-            title:'物联网卡'+ package.version,
+            title:'模拟考试计时收费系统'+ package.version,
             filename: '../index.html',
             inject: false
         }),
