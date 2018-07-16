@@ -24,8 +24,10 @@
                           </Form-item>
                       </Row>
                       <Row>
-                          <Form-item label="MAC地址"  >
-                              <Input v-model="searchForm.car_Mac" ></Input>
+                          <Form-item label="车辆状态"  >
+                                <Select v-model="searchForm.car_stat" style="z-index:999">
+                                  <Option v-for="item in carStatList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                </Select>
                           </Form-item>
                       </Row>
                   </Form>
@@ -263,10 +265,28 @@
         },
         searchForm:{
           car_Plate:'',
-          car_Mac: '',
+          car_stat: '0',
           rows:10,
           page:1,
         },
+         carStatList: [
+                     {
+                        value: '0',
+                        label: '全部'
+                    },
+                    {
+                        value: '1',
+                        label: '空闲'
+                    },
+                    {
+                        value: '2',
+                        label: '考试中'
+                    },
+                    {
+                        value: '3',
+                        label: '离线'
+                    }
+                ],
         delModal:false,
         delId:'', //删除的Id
         carPhotoSrc:'',
