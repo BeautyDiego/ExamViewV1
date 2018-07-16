@@ -13,7 +13,6 @@
     <div style="background-color:#B0E0E6;padding:10px 0 0;border-radius:4px;position:relative;">
       <Row>
           <Button class="top-right-btn" size="large" icon="plus" @click="addCar">添加</Button>
-
           <Poptip  width="400" title='搜索' placement="bottom-end" class="top-btn">
               <Button type="primary" icon="ios-search" size="large" >搜  索</Button>
               <div style="text-align:center" slot="content">
