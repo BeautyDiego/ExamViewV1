@@ -147,10 +147,10 @@ export default {
     data () {
         return {
             count: {
-                ExamTotalHour: 496,
-                TodaySales: 326,
-                TodayExamedCount: 243,
-                TodayExamingCount: 395
+                ExamTotalHour: 0,
+                TodaySales: 0,
+                TodayExamedCount: 0,
+                TodayExamingCount: 0
             },
         };
     },

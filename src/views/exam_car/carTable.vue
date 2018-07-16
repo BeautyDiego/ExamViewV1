@@ -16,7 +16,7 @@
 
           <Poptip  width="400" title='搜索' placement="bottom-end" class="top-btn">
               <Button type="primary" icon="ios-search" size="large" >搜  索</Button>
-              <div style="text-align:center" slot="content">
+              <div style="text-align:center;" slot="content">
                   <Form ref="searchForm" :model="searchForm" :label-width="80"  value=true  style="min-width:200px;padding-top:20px;border-top:1px solid #a3adba;border-bottom:1px solid #a3adba;">
                       <Row>
                           <Form-item label="车牌号"  >
@@ -25,7 +25,7 @@
                       </Row>
                       <Row>
                           <Form-item label="车辆状态"  >
-                                <Select v-model="searchForm.car_stat" style="z-index:999">
+                                <Select v-model="searchForm.car_stat" style="z-index:999" transfer="true">
                                   <Option v-for="item in carStatList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
                           </Form-item>
