@@ -118,19 +118,11 @@ export default {
   },
   methods: {
         init () {
-<<<<<<< HEAD
-            console.log(this.adminInfo)
-=======
-            console.log('adminInfo:'+this.adminInfo)
->>>>>>> 1374ea5d9421292661d250045888ce16646fc678
             this.userForm.name = this.adminInfo.Name;
             this.userForm.loginName = this.adminInfo.LoginName;
             this.userForm.cellphone = this.adminInfo.Phone;
             this.userForm.RoleName = this.adminInfo.RoleName;
-<<<<<<< HEAD
-=======
       
->>>>>>> 1374ea5d9421292661d250045888ce16646fc678
         },
         showEditPassword(){
           this.editPasswordModal=true;
