@@ -18,17 +18,13 @@
                     :rules="inforValidate"
                 >
                     <FormItem label="用户姓名：" >
-                        <span>{{ userForm.Cus_Name }}</span>
+                        <span>{{ userForm.name }}</span>
                     </FormItem>
                     <FormItem label="登录名称：" >
-                        <span>{{ userForm.LoginName }}</span>
+                        <span>{{ userForm.loginName }}</span>
                     </FormItem>
                     <FormItem label="用户手机："  >
-                        <span>{{ userForm.ManagerMobile }}</span>
-                    </FormItem>
-            
-                    <FormItem v-if="IsAdmin" label="可用余额：">
-                        <span>￥{{ userForm.RestCash.toFixed(2) }}元</span>
+                        <span>{{ userForm.cellphone }}</span>
                     </FormItem>
                     <FormItem label="">
                         <Button type="warning" @click="showEditPassword">修改密码</Button>
@@ -77,11 +73,10 @@ export default {
         };
         return {
             userForm: {
-                Cus_Name: '',
-              LoginName:'',
-                ManagerMobile: '',
+                name: '',
+                loginName:'',
+                cellphone: '',
                 RoleName: '',
-              RestCash:''
             },
             save_loading: false,
             identifyError: '', // 验证码错误
@@ -114,26 +109,15 @@ export default {
     ...mapState({
       adminInfo: state => state.user.adminInfo,
     }),
-    IsAdmin: function () {
-      return this.adminInfo.RoleName != "管理员";
-    },
   },
   methods: {
         init () {
+            console.log(this.adminInfo)
             this.userForm.name = this.adminInfo.Name;
             this.userForm.loginName = this.adminInfo.LoginName;
             this.userForm.cellphone = this.adminInfo.Phone;
             this.userForm.RoleName = this.adminInfo.RoleName;
-            if(this.adminInfo.RoleName != "管理员"){
-              this.GetCustomer(this.adminInfo.Id);
-            }
         },
-        async GetCustomer(userId){
-         const params = {userId:userId}
-         const res = await GetCustomer(params);
-         this.userForm=res;
-        },
-    
         showEditPassword(){
           this.editPasswordModal=true;
         },
