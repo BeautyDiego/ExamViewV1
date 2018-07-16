@@ -26,10 +26,7 @@
                     <FormItem label="用户手机："  >
                         <span>{{ userForm.ManagerMobile }}</span>
                     </FormItem>
-            
-                    <FormItem v-if="IsAdmin" label="可用余额：">
-                        <span>￥{{ userForm.RestCash.toFixed(2) }}元</span>
-                    </FormItem>
+
                     <FormItem label="">
                         <Button type="warning" @click="showEditPassword">修改密码</Button>
                     </FormItem>
@@ -63,7 +60,7 @@
 <script>
 
 import { mapState } from 'vuex'
-import {editUserPwd,GetCustomer} from './../../api/getData'
+import {editUserPwd} from './../../api/getData'
 
 export default {
     name: 'ownspace_index',
@@ -114,24 +111,15 @@ export default {
     ...mapState({
       adminInfo: state => state.user.adminInfo,
     }),
-    IsAdmin: function () {
-      return this.adminInfo.RoleName != "管理员";
-    },
   },
   methods: {
         init () {
+            console.log('adminInfo:'+this.adminInfo)
             this.userForm.name = this.adminInfo.Name;
             this.userForm.loginName = this.adminInfo.LoginName;
             this.userForm.cellphone = this.adminInfo.Phone;
             this.userForm.RoleName = this.adminInfo.RoleName;
-            if(this.adminInfo.RoleName != "管理员"){
-              this.GetCustomer(this.adminInfo.Id);
-            }
-        },
-        async GetCustomer(userId){
-         const params = {userId:userId}
-         const res = await GetCustomer(params);
-         this.userForm=res;
+      
         },
     
         showEditPassword(){
@@ -167,6 +155,7 @@ export default {
         },
     },
     mounted () {
+        console.log('mounted')
         this.init();
     }
 };
