@@ -132,7 +132,6 @@ export default {
          const params = {userId:userId}
          const res = await GetCustomer(params);
          this.userForm=res;
-         console.log(res)
         },
     
         showEditPassword(){

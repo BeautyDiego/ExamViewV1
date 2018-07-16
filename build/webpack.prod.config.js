@@ -15,6 +15,7 @@ fs.open('./build/env.js', 'w', function(err, fd) {
     const buf = 'export default "production";';
     fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
 });
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(webpackBaseConfig, {
     output: {
@@ -75,11 +76,14 @@ module.exports = merge(webpackBaseConfig, {
             ]
         }),
         new HtmlWebpackPlugin({
-            title: '模拟考试计时收费系统' + package.version,
+            title: '模拟考试计时管理平台' + package.version,
             favicon: './td_icon.ico',
             filename: '../index.html',
             template: '!!ejs-loader!./src/template/index.ejs',
             inject: false
-        })
+        }),
+        new BundleAnalyzerPlugin()
     ]
 });
+
+ 

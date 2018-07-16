@@ -53,8 +53,8 @@
           <Form-item label="车牌号" prop="CarPlate" :rules="{required: true, message: '必填,请输入正确的车牌号',min:1,max:10, trigger:'blur',type:'string',pattern:/^([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1})$/}" >
             <Input v-model="modalForm.CarPlate" ></Input>
           </Form-item>
-          <Form-item label="车编号" prop="CarNum" :rules="{required: true, message: '必填,1-6位数字', trigger:'blur',type:'string',pattern: /^[0-9]{1,6}$/}" >
-            <Input v-model="modalForm.CarNum" ></Input>
+          <Form-item label="车编号" prop="CarNum" :rules="{required: true, message: '车辆编号,1-9999', trigger:'blur',type:'number'}" >
+          <InputNumber :max="9999" :min="1" v-model="modalForm.CarNum"></InputNumber>
           </Form-item>
           <Form-item  label="车架号" prop="CarFrame"  :rules="{required: true, message: '必填,6-20位数字或字母', trigger:'blur',type:'string',pattern: /^[a-zA-Z0-9_-]{6,20}$/}" >
             <Input v-model="modalForm.CarFrame" ></Input>
@@ -208,7 +208,6 @@ export default {
                   const params = this.modalForm;
                   try{
                       let result;
-                      console.log(params);
                       if (this.modalFormTitle ==='添加教练车'){
                           result = await addExamCar(params);
                       }else{
@@ -222,7 +221,6 @@ export default {
                           this.$Message.error(result.msg);
                       }
                   }catch(err){
-                      console.log(err);
                       this.$Message.error('服务器异常，稍后再试');
                   }
                   this.modalForm_loading=false;

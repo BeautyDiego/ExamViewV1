@@ -63,12 +63,12 @@ export const appRouter = [
         icon: 'ios-infinite',
         name: 'exam',
         access: 0,
-        title: '资源管理',
+        title: '计时管理',
         component: Main,
         children: [
             { path: 'carTable', title: '教练车',access: 0, name: 'carTable', icon: 'link', component: resolve => void(require(['@/views/exam_car/carTable.vue'],resolve)),}, // 懒加载 () => import('@/views/customer-manager/basic_info/basic_infoTable.vue') },
             { path: 'coachTable', title: '教练员',access: 0, name: 'coachTable', icon: 'link', component: resolve => void(require(['@/views/exam_coach/coachTable.vue'],resolve)),},
-            { path: 'expenseTable', title: '计费管理',access: 0, name: 'expenseTable', icon: 'link', component: resolve => void(require(['@/views/exam_expense/expenseTable.vue'],resolve)),},
+            { path: 'expenseTable', title: '计费规则',access: 0, name: 'expenseTable', icon: 'link', component: resolve => void(require(['@/views/exam_expense/expenseTable.vue'],resolve)),},
             { path: 'ordersTable', title: '订单',access: 0, name: 'ordersTable', icon: 'link', component: resolve => void(require(['@/views/exam_orders/ordersTable.vue'],resolve)),},
             { path: 'rateCodeTable', title: '优惠券',access: 0, name: 'rateCodeTable', icon: 'link', component: resolve => void(require(['@/views/exam_rateCode/rateCodeTable.vue'],resolve)),},
         ]

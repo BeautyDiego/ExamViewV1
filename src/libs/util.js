@@ -5,7 +5,7 @@ import packjson from '../../package.json'
 
 let util = {}
 util.title = function (title) {
-  title = title || '管理系统'
+  title = title || '模拟考试计时管理平台'
   window.document.title = title
 }
 

@@ -78,12 +78,12 @@ module.exports = {
             threadPool: happyThreadPool,
             verbose: true
         }),
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery',
-        'root.jQuery': 'jquery'
-      })
+      //new webpack.ProvidePlugin({
+       // $: 'jquery',
+       // jQuery: 'jquery',
+       // 'window.jQuery': 'jquery',
+       // 'root.jQuery': 'jquery'
+     // })
     ],
     resolve: {
         extensions: ['.js', '.vue'],

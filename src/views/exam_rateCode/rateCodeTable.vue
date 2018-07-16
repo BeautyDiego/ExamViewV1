@@ -102,10 +102,20 @@
             key: 'StartHour',
           },
           {
-              align:'center',
-              title: '是否生效',
-              key: 'Enabled',
-            
+            align:'center',
+            title: '是否生效',
+            key: 'Enabled', render: (h, params) => {
+                            const row = params.row;
+                            const color = row.Enabled === '立即生效' ? 'green': 'red';
+                            const text = row.Enabled;
+
+                            return h('Tag', {
+                                props: {
+                                    type: 'dot',
+                                    color: color
+                                }
+                            }, text);
+                        }
           },
           {
             align:'center',

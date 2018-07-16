@@ -134,7 +134,6 @@
             async getTableList(){
                 if(this.searchForm.ranges[0]&&this.searchForm.ranges[1]){
                     this.searchForm.page = this.currentPage;
-                    console.log(this.searchForm);
                     this.tableLoading=true;              
                     const res = await getCoachRebate({start:this.searchForm.ranges[0],end:this.searchForm.ranges[1],page:this.searchForm.page,rows:this.searchForm.rows});
                     this.total = res.total;
@@ -155,7 +154,6 @@
                 const res = await getCoachRebateExcel({start:this.searchForm.ranges[0],end:this.searchForm.ranges[1]});
                 if(res.success){
                     const url= this.UpLoadURL_PREFIX+"/excel/"+res.filename;
-                    console.log(url);
                     window.open(url); 
                 }else{
 

@@ -216,7 +216,7 @@
       async comfirmDel(){
           this.btnLoading=true;
           try{
-              const res= await delUser({Id:this.delId});
+              const res= await deleteExamCoach({Id:this.delId});
               if (res.success) {
                   this.$Message.success('删除成功!');
                   this.getTableList();

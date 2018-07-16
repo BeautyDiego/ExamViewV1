@@ -281,7 +281,6 @@ export default {
             if (result.success){
                 this.modalForm.Exam_CoachName=result.coach.CoachName;
                 this.standCostMin = this.expense.BasicCost;
-                console.log(this.standCostMin)
                 this.currentStep=1;
             }else{
                 this.$Message.error(result.msg);

@@ -149,7 +149,6 @@
                 const res = await getSalesStaticExcel({start:this.searchForm.ranges[0],end:this.searchForm.ranges[1]});
                 if(res.success){
                     const url= this.UpLoadURL_PREFIX+"/excel/"+res.filename;
-                    console.log(url);
                     window.open(url); 
                 }else{
 

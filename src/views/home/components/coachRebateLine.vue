@@ -48,7 +48,6 @@ export default {
                       });
                  yAxisData.push(item.Exam_CoachName);
                  }
-                 console.log(seriesData);
 
                  const option = {
                      tooltip: {

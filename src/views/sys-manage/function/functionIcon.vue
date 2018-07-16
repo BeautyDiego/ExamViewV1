@@ -48,7 +48,7 @@
 </template>
 
 <script>
-  import $ from './jquery-2.0.0.min';
+//  import $ from './jquery-2.0.0.min';
   import {Icons} from './Icons'
 export default {
     props:{

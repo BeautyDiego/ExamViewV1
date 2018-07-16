@@ -29,7 +29,7 @@ module.exports = merge(webpackBaseConfig, {
             minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
-            title:'模拟考试计时收费系统'+ package.version,
+            title:'模拟考试计时管理平台'+ package.version,
             filename: '../index.html',
             inject: false
         }),
