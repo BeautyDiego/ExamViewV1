@@ -18,15 +18,20 @@
                     :rules="inforValidate"
                 >
                     <FormItem label="用户姓名：" >
-                        <span>{{ userForm.Cus_Name }}</span>
+                        <span>{{ userForm.name }}</span>
                     </FormItem>
                     <FormItem label="登录名称：" >
-                        <span>{{ userForm.LoginName }}</span>
+                        <span>{{ userForm.loginName }}</span>
                     </FormItem>
                     <FormItem label="用户手机："  >
+<<<<<<< HEAD
+                        <span>{{ userForm.cellphone }}</span>
+                    </FormItem>
+=======
                         <span>{{ userForm.ManagerMobile }}</span>
                     </FormItem>
 
+>>>>>>> 1374ea5d9421292661d250045888ce16646fc678
                     <FormItem label="">
                         <Button type="warning" @click="showEditPassword">修改密码</Button>
                     </FormItem>
@@ -74,11 +79,10 @@ export default {
         };
         return {
             userForm: {
-                Cus_Name: '',
-              LoginName:'',
-                ManagerMobile: '',
+                name: '',
+                loginName:'',
+                cellphone: '',
                 RoleName: '',
-              RestCash:''
             },
             save_loading: false,
             identifyError: '', // 验证码错误
@@ -114,14 +118,20 @@ export default {
   },
   methods: {
         init () {
+<<<<<<< HEAD
+            console.log(this.adminInfo)
+=======
             console.log('adminInfo:'+this.adminInfo)
+>>>>>>> 1374ea5d9421292661d250045888ce16646fc678
             this.userForm.name = this.adminInfo.Name;
             this.userForm.loginName = this.adminInfo.LoginName;
             this.userForm.cellphone = this.adminInfo.Phone;
             this.userForm.RoleName = this.adminInfo.RoleName;
+<<<<<<< HEAD
+=======
       
+>>>>>>> 1374ea5d9421292661d250045888ce16646fc678
         },
-    
         showEditPassword(){
           this.editPasswordModal=true;
         },

@@ -20,7 +20,10 @@ export const functionTreeGrid = data => fetch('/Sys_Function/GetList', data, 'PO
  * 获取所有一级菜单
  */
 export const parentFunctionList = data => fetch('/Sys_Function/GetParentFunction', data, 'POST');
-
+/**
+ *  * 获取余额
+ */
+export const GetCustomer = data => fetch('/Cus_Customer/Get_Cus_Customer', data, 'POST');
 /**
 
  * 添加菜单

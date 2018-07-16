@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie'
 
 const user = {
-  state: {},
+  state: {
+      adminInfo:null,
+  },
   mutations: {
     logout (state, vm) {
       Cookies.remove('user')
@@ -30,7 +32,13 @@ const user = {
       Cookies.set('userId', adminInfo.Id)
     //  Cookies.set('menuList', JSON.stringify(adminInfo.menuList))
       Cookies.set('access', 0)
+      sessionStorage.setItem('adminInfo', JSON.stringify(adminInfo));
       state.adminInfo = adminInfo
+    },
+    refresh(state){
+      if (sessionStorage.getItem('adminInfo')){
+          state.adminInfo = JSON.parse(sessionStorage.getItem('adminInfo'))
+      }
     }
   }
 }

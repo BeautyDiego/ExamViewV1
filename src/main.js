@@ -43,5 +43,6 @@ new Vue({
             }
         });
         this.$store.commit('setTagsList', tagsList);
+        this.$store.commit('refresh');
     }
 });
