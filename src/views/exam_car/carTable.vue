@@ -25,7 +25,7 @@
                       </Row>
                       <Row>
                           <Form-item label="车辆状态"  >
-                                <Select v-model="searchForm.car_stat" style="z-index:999" transfer="true">
+                                <Select v-model="searchForm.car_stat"  transfer="true">
                                   <Option v-for="item in carStatList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
                           </Form-item>
