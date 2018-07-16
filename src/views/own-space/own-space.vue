@@ -24,8 +24,14 @@
                         <span>{{ userForm.loginName }}</span>
                     </FormItem>
                     <FormItem label="用户手机："  >
+<<<<<<< HEAD
                         <span>{{ userForm.cellphone }}</span>
                     </FormItem>
+=======
+                        <span>{{ userForm.ManagerMobile }}</span>
+                    </FormItem>
+
+>>>>>>> 1374ea5d9421292661d250045888ce16646fc678
                     <FormItem label="">
                         <Button type="warning" @click="showEditPassword">修改密码</Button>
                     </FormItem>
@@ -59,7 +65,7 @@
 <script>
 
 import { mapState } from 'vuex'
-import {editUserPwd,GetCustomer} from './../../api/getData'
+import {editUserPwd} from './../../api/getData'
 
 export default {
     name: 'ownspace_index',
@@ -112,11 +118,19 @@ export default {
   },
   methods: {
         init () {
+<<<<<<< HEAD
             console.log(this.adminInfo)
+=======
+            console.log('adminInfo:'+this.adminInfo)
+>>>>>>> 1374ea5d9421292661d250045888ce16646fc678
             this.userForm.name = this.adminInfo.Name;
             this.userForm.loginName = this.adminInfo.LoginName;
             this.userForm.cellphone = this.adminInfo.Phone;
             this.userForm.RoleName = this.adminInfo.RoleName;
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 1374ea5d9421292661d250045888ce16646fc678
         },
         showEditPassword(){
           this.editPasswordModal=true;
@@ -151,6 +165,7 @@ export default {
         },
     },
     mounted () {
+        console.log('mounted')
         this.init();
     }
 };
