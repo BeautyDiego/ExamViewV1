@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import echarts from 'echarts';
+//import echarts from 'echarts';
 import {getCusResource} from './../../../api/getData'
 export default {
     name: 'cusResource',

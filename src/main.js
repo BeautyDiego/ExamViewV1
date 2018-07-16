@@ -8,7 +8,7 @@ import '@/locale';
 import 'iview/dist/styles/iview.css';
 import VueI18n from 'vue-i18n';
 import util from './libs/util';
-import 'signalr';
+// import 'signalr';
 import {baseUrl} from './api/env'
 
 Vue.use(VueI18n);
