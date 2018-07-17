@@ -70,8 +70,8 @@
           },
           {
             align:'center',
-            title: '成本价(元)',
-            key: 'BasicCost',render: (h, params) => { return  params.row.BasicCost!=null?'￥'+params.row.BasicCost+'.00':'' ;}
+            title: '成本价(元/小时)',
+            key: 'BasicCost',render: (h, params) => { return  params.row.BasicCost!=null?'￥'+params.row.BasicCost.toFixed(2):''  ;}
           },
           {
               align:'center',
@@ -81,17 +81,17 @@
           {
             align:'center',
             title: '单小时总优惠(元)',
-            key: 'HourTotalDiscount',render: (h, params) => { return  params.row.HourTotalDiscount!=null?'￥'+params.row.HourTotalDiscount+'.00':''  ;}
+            key: 'HourTotalDiscount',render: (h, params) => { return  params.row.HourTotalDiscount!=null?'￥'+params.row.HourTotalDiscount.toFixed(2):''  ;}
           },
           {
             align:'center',
             title: '单小时驾校优惠(元)',
-            key: 'HourSchoolDiscout',render: (h, params) => { return  params.row.HourSchoolDiscout!=null?'￥'+params.row.HourSchoolDiscout+'.00':''  ;}
+            key: 'HourSchoolDiscout',render: (h, params) => { return  params.row.HourSchoolDiscout!=null?'￥'+params.row.HourSchoolDiscout.toFixed(2):''  ;}
           },
           {
             align:'center',
-            title: '优惠后成本价(元)',
-            key: 'DiscountBasicCost',render: (h, params) => { return   params.row.DiscountBasicCost!=null?'￥'+params.row.DiscountBasicCost+'.00':''  ;}
+            title: '优惠后成本价(元/小时)',
+            key: 'DiscountBasicCost',render: (h, params) => { return   params.row.DiscountBasicCost!=null?'￥'+params.row.DiscountBasicCost.toFixed(2):''  ;}
           },
           {
             align:'center',
@@ -158,7 +158,7 @@
           },
           {
             align:'center',
-            title: '标准价格(元)',
+            title: '标准价格(元/小时)',
             key: 'StandardCost',render: (h, params) => { return  params.row.StandardCost!=null?'￥'+params.row.StandardCost.toFixed(2):''  ;}
           },
           {
@@ -237,7 +237,7 @@
           },
           {
             align:'center',
-            title: '成本价(元)',
+            title: '成本价(元/小时)',
             key: 'BasicCost',render: (h, params) => { return  params.row.BasicCost!=null?'￥'+params.row.BasicCost.toFixed(2):'' ;}
           },
           {
@@ -248,7 +248,7 @@
           {
             align:'center',
             title: '单小时总优惠(元)',
-            key: 'HourTotalDiscount',render: (h, params) => { return  params.row.HourTotalDiscount!=null?'￥'+params.row.HourTotalDiscountto.Fixed(2):''  ;}
+            key: 'HourTotalDiscount',render: (h, params) => { return  params.row.HourTotalDiscount!=null?'￥'+params.row.HourTotalDiscount.toFixed(2):''  ;}
           },
           {
             align:'center',
@@ -257,7 +257,7 @@
           },
           {
             align:'center',
-            title: '优惠后成本价(元)',
+            title: '优惠后成本价(元/小时)',
             key: 'DiscountBasicCost',render: (h, params) => { return   params.row.DiscountBasicCost!=null?'￥'+params.row.DiscountBasicCost.toFixed(2):''  ;}
           },
           {

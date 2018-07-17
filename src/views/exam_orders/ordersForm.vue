@@ -48,7 +48,7 @@
             <InputNumber v-model="modalForm.CostPerHour" :readonly="!IsCoachSource" :min="standCostMin"></InputNumber>
           </Form-item>
           <Form-item label="学习时长：" >
-            <InputNumber  v-model="modalForm.ExamHour" :min="0"></InputNumber >
+            <InputNumber  v-model="modalForm.ExamHour" :step="1" :min="0"></InputNumber >
           </Form-item>
           <Form-item label="教练车：" >
             <Select v-model="modalForm.CarId" placeholder="请选择" @on-change="onCarChange">
@@ -114,6 +114,7 @@
       <Button type="ghost" :loading="modalForm_loading" @click="nextStep" v-show="currentStep==0" >下一步</Button>
       <Button type="primary"  :loading="modalForm_loading" @click="saveForm" v-show="currentStep==1" >提交订单</Button>
       <Button type="warning" :loading="modalForm_loading" @click="printOrder" v-show="currentStep==2" >打印</Button>
+     
     </div>
   </Modal>
 </div>
@@ -378,8 +379,13 @@ export default {
           this.modalForm_loading=false;
       },
       printOrder(){
-          this.CreateOneFormPage();
-          LODOP.PRINT();
+          try{
+            this.CreateOneFormPage();
+            LODOP.PRINT();
+          }catch(err){
+            this.$Message.error('未检测到打印驱动!');
+          }   
+
         //  LODOP.PREVIEW();
 
       },

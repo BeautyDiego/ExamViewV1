@@ -116,7 +116,7 @@
       <Form-item  label="品牌" prop="Brand"  :rules="{required: true, message: '必填,最多20位', trigger:'blur',type:'string',max:20}" >
         <Input v-model="modalForm.Brand" ></Input>
       </Form-item>
-      <Form-item  label="车辆类型" prop="Model"  :rules="{required: true, message: '必填,最多20位', trigger:'blur',type:'string',max:20}" >
+      <Form-item  label="型号" prop="Model"  :rules="{required: true, message: '必填,最多20位', trigger:'blur',type:'string',max:20}" >
         <Input v-model="modalForm.Model" ></Input>
       </Form-item>
       <Form-item  label="备注"    >

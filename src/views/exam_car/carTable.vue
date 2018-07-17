@@ -197,7 +197,7 @@
           },
           {
               align:'center',
-              title: '模型',
+              title: '型号',
               key: 'Model',
           },
           {
@@ -302,8 +302,9 @@
     },
     methods: {
       resetSearch(){
-        this.searchForm.PoolNum='';
-        this.searchForm.SimNum='';
+          this.searchForm.car_Plate='',
+          this.searchForm.car_stat = '0',
+
         this.searchForm.SimStatus='全部';
       },
       doSearchTableList(){

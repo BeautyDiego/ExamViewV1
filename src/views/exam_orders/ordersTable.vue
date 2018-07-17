@@ -16,6 +16,7 @@
               <Radio label="教练客源"></Radio>
               <Radio label="自然客源"></Radio>
           </RadioGroup>
+          <a class="top-right-btn" @click="downloadPrint" style="margin-top: 18px;">下载打印驱动</a>
           <Button class="top-right-btn" size="large" icon="plus" @click="addCar">添加</Button>
 
           <Poptip  width="400" title='搜索' placement="bottom-end" class="top-btn">
@@ -39,6 +40,7 @@
                   </Row>
               </div>
           </Poptip>
+
       </Row>
     </div>
     <!--table-->
@@ -135,44 +137,22 @@
           },
           {
             align:'center',
-            title: '学习时长',
+            title: '学习时长(小时)',
             key: 'ExamHour',
           },
           {
             align:'center',
             title: '开始时间',
             key: 'ExamStart',
+             width:180,
           },
           {
             align:'center',
             title: '结束时间',
             key: 'ExamEnd',
+            width:180,
           },
-//          {
-//            align:'center',
-//            title: '教练价格',
-//            key: 'CoachPrice',
-//          },
-//          {
-//              align:'center',
-//              title: '总价格',
-//              key: 'TotalCost',
-//          },
-//          {
-//              align:'center',
-//              title: '成本价格',
-//              key: 'BasicCost',
-//          },
-//          {
-//              align:'center',
-//              title: '单小时总优惠',
-//              key: 'HourTotalDiscount',
-//          },
-//          {
-//            align:'center',
-//            title: '单小时驾校优惠',
-//            key: 'HourSchoolDiscout',
-//          },
+
           {
             title: '操作',
             align: 'center',
@@ -192,20 +172,6 @@
                       }
                   }
               }, '打印'));
-//              actions.push(  h('Button', {
-//                  props: {
-//                      type: 'error',
-//                      size: 'small'
-//                  },
-//                  style: {
-//                      marginRight: '5px'
-//                  },
-//                  on: {
-//                      click: () => {
-//                          this.delCar(params.row.Id)
-//                      }
-//                  }
-//              }, '删除'));
               return h('div', actions);
             }
           }
@@ -319,6 +285,10 @@
           }
           this.btnLoading=false;
       },
+      downloadPrint(){
+         const url= this.UpLoadURL_PREFIX+"/download/打印驱动.zip";
+                    window.open(url); 
+      }
     }
   }
 
