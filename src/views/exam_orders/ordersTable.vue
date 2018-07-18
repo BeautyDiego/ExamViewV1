@@ -216,9 +216,8 @@
     },
     methods: {
       resetSearch(){
-        this.searchForm.PoolNum='';
-        this.searchForm.SimNum='';
-        this.searchForm.SimStatus='全部';
+        this.searchForm.coachName='';
+        this.searchForm.carPlate='';
       },
       doSearchTableList(){
         this.currentPage=1;

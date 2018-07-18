@@ -253,7 +253,7 @@
           CarPlate: '',
           CarNum: '',
           CarFrame: '',
-          AutoType: '',
+          AutoType: 1,
           CarStatus: '',
           MacAddr: '',
           PlateColor: '',
@@ -326,6 +326,7 @@
       },
       addCar(){
           clearObj(this.parentForm);
+          this.parentForm.AutoType=1
           this.formTitle='添加教练车';
           this.formShow=true;
       },

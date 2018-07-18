@@ -323,7 +323,7 @@
         total:0,
         currentPage:1,
         formShow:false,
-        formTitle:'添加资费',
+        formTitle:'添加计费规则',
         parentForm:{
           Id:'',
           CusType:'教练客源',
@@ -383,13 +383,13 @@
         this.getTableList();
       },
        addExp(){
-          this.parentForm=this.resetForm;
-          this.formTitle='添加资费';
+         this.parentForm=JSON.parse(JSON.stringify(this.resetForm));
+          this.formTitle='添加计费规则';
           this.formShow=true;
       },
       editExp(row){
         this.parentForm=JSON.parse(JSON.stringify(row));
-        this.formTitle='修改资费';
+        this.formTitle='修改计费规则';
         debugger;
         this.formShow=true;
       },

@@ -11,7 +11,7 @@
             <span class="expand-value">￥{{ row.StandardCost }}</span>
             </Col>
             <Col span="8">
-            <span class="expand-key">总价格: </span>
+            <span class="expand-key">应收金额: </span>
             <span class="expand-value">￥{{ row.TotalCost }}</span>
             </Col>
             <Col span="8">

@@ -48,7 +48,7 @@
             <InputNumber v-model="modalForm.CostPerHour" :readonly="!IsCoachSource" :min="standCostMin"></InputNumber>
           </Form-item>
           <Form-item label="学习时长：" >
-            <InputNumber  v-model="modalForm.ExamHour" :step="1" :min="0"></InputNumber >
+            <InputNumber  v-model="modalForm.ExamHour" :step="0.5" readonly='true' :min="0"></InputNumber >
           </Form-item>
           <Form-item label="教练车：" >
             <Select v-model="modalForm.CarId" placeholder="请选择" @on-change="onCarChange">
@@ -72,15 +72,15 @@
             <p slot="title">订单详情</p>
             <div class="current-setting">
               <Row class="setting-row"><Col span="12" class="setting-title">客源：</Col><Col span="12">{{modalForm.CusType}}</Col> </Row>
-              <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员：</Col><Col span="12">{{modalForm.Exam_CoachName}}</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">车牌：</Col><Col span="12">{{modalForm.Exam_CarPlate}}</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">车号：</Col><Col span="12">{{modalForm.Exam_CarNum}}</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">车类型：</Col><Col span="12">{{modalForm.Exam_CarType}}</Col></Row>
+              <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员姓名：</Col><Col span="12">{{modalForm.Exam_CoachName}}</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">车牌号：</Col><Col span="12">{{modalForm.Exam_CarPlate}}</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">车编号：</Col><Col span="12">{{modalForm.Exam_CarNum}}</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">车辆类型：</Col><Col span="12">{{modalForm.Exam_CarType}}</Col></Row>
               <Row class="setting-row"><Col span="12" class="setting-title">学习时长：</Col><Col span="12">{{modalForm.ExamHour}}小时</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">每个小时单价：</Col><Col span="12">￥{{modalForm.CostPerHour}}</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">单个钟优惠：</Col><Col span="12">￥{{expense.HourTotalDiscount}}</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">每个小时单价：</Col><Col span="12">￥{{modalForm.CostPerHour}}元</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">单个钟优惠：</Col><Col span="12">￥{{expense.HourTotalDiscount}}元</Col></Row>
               <Row class="setting-row" v-if="!IsCoachSource"><Col span="12" class="setting-title">优惠券优惠：</Col><Col span="12">￥{{rateCode.Worth}}</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">订单金额：</Col><Col span="12">￥{{orderOriginAmount}}</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">应收金额：</Col><Col span="12">￥{{orderOriginAmount}}元</Col></Row>
               <Row style="font-size:28px;color:#ea6219;">￥{{orderOriginAmount-saveMoney}}</Row>
               <Row style="font-size:18px;color:#47b348;">省￥{{saveMoney}}</Row>
             </div>
@@ -95,15 +95,15 @@
           <div class="current-setting">
             <Row class="setting-row"><Col span="12" class="setting-title">订单编号：</Col><Col span="12">{{order.OrderNum}}</Col> </Row>
             <Row class="setting-row"><Col span="12" class="setting-title">客源：</Col><Col span="12">{{order.CusType}}</Col> </Row>
-            <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员：</Col><Col span="12">{{order.Exam_CoachName}}</Col></Row>
-            <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员：</Col><Col span="12">{{order.Exam_CoachMobile}}</Col></Row>
-            <Row class="setting-row"><Col span="12" class="setting-title">车牌：</Col><Col span="12">{{order.Exam_CarPlate}}</Col></Row>
-            <Row class="setting-row"><Col span="12" class="setting-title">车号：</Col><Col span="12">{{order.Exam_CarNum}}</Col></Row>
+            <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员姓名：</Col><Col span="12">{{order.Exam_CoachName}}</Col></Row>
+            <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员电话：</Col><Col span="12">{{order.Exam_CoachMobile}}</Col></Row>
+            <Row class="setting-row"><Col span="12" class="setting-title">车牌号：</Col><Col span="12">{{order.Exam_CarPlate}}</Col></Row>
+            <Row class="setting-row"><Col span="12" class="setting-title">车编号：</Col><Col span="12">{{order.Exam_CarNum}}</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">车类型：</Col><Col span="12">{{order.Exam_CarType}}</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">学习时长：</Col><Col span="12">{{order.ExamHour}}小时</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">开始时间：</Col><Col span="12">{{order.ExamStart}}</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">结束时间：</Col><Col span="12">{{order.ExamEnd}}</Col></Row>
-            <Row class="setting-row"><Col span="12" class="setting-title">订单金额：</Col><Col span="12">￥{{order.TotalCost}}</Col></Row>
+            <Row class="setting-row"><Col span="12" class="setting-title">应收金额：</Col><Col span="12">￥{{order.TotalCost}}</Col></Row>
           </div>
         </Card>
       </div>

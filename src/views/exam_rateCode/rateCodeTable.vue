@@ -193,18 +193,16 @@
         formTitle:'添加优惠卷',
         parentForm:{
           Id:'',
-          CarPlate: '',
-          CarNum: '',
-          CarFrame: '',
-          AutoType: '',
-          CarStatus: '',
-          MacAddr: '',
-          PlateColor: '',
-          CarPhoto:'',
-          Manufacture:'',
-          Brand:'',
-          Model:'',
-          Remark:'',
+          RateCode: '',
+          Worth: '',
+          StartHour: '',
+          StartDate: '',
+          EndDate: '',
+          Enabled: '立即生效',
+          OwenCompany: '',
+          Owener:'',
+          OwenPhone:'',
+          textarea:'',
         },
         searchForm:{
           OwenCompany: '',
@@ -246,6 +244,7 @@
       },
        addRate(){
           clearObj(this.parentForm);
+          this.parentForm.Enabled='立即生效';
           this.formTitle='添加优惠卷';
           this.formShow=true;
       },

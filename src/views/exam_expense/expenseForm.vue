@@ -42,7 +42,7 @@
             </RadioGroup>
         </Form-item>
      <Form-item  label="备注"    >
-        <Input v-model="modalForm.Remark"  type="textarea"  :rows="2" maxlength="200" ></Input>
+        <Input v-model="modalForm.Remark"  type="textarea" placeholder="最多输入50字。" :rows="2" maxlength="50" ></Input>
       </Form-item>
     </Form>
     <div slot="footer">
@@ -73,7 +73,7 @@ export default {
       },
       modalFormTitle:{
         type: String,
-        default: '添加用户',
+        default: '添加计费规则',
       },
     },
     data() {
@@ -109,7 +109,7 @@ export default {
             const params = this.modalForm;
             try{
               let result;
-              if (this.modalFormTitle ==='添加资费'){
+              if (this.modalFormTitle ==='添加计费规则'){
                  result = await addExamExpense(params);
               }else{
                  result = await editExamExpense(params);

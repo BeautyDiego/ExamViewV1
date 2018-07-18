@@ -23,7 +23,7 @@
         <Input v-model="modalForm.DrivingSchName" ></Input>
       </Form-item>
       <Form-item  label="备注"    >
-        <Input v-model="modalForm.Remark"  type="textarea"  :rows="2" maxlength="200" ></Input>
+        <Input v-model="modalForm.Remark"   type="textarea" placeholder="最多输入50字。" :rows="2" maxlength="50" ></Input>
       </Form-item>
 
     </Form>

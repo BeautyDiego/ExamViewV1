@@ -174,9 +174,9 @@
     },
     methods: {
       resetSearch(){
-        this.searchForm.PoolNum='';
-        this.searchForm.SimNum='';
-        this.searchForm.SimStatus='全部';
+        this.searchForm.coach_Name='';
+        this.searchForm.coach_mobile='';
+        this.searchForm.school='';
       },
       doSearchTableList(){
         this.currentPage=1;
@@ -197,6 +197,7 @@
       },
       addCar(){
           clearObj(this.parentForm);
+
           this.formTitle='添加教练员';
           this.formShow=true;
       },

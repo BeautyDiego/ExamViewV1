@@ -17,7 +17,7 @@
       <Form-item label="优惠码" prop="RateCode" :rules="{required: true, message: '必填,1-10位字符', trigger:'blur',type:'string'}" >
       <Row>
       <Col span="15">
-       <Input v-model="modalForm.RateCode" readonly='true' ></Input>
+       <Input v-model="modalForm.RateCode"  ></Input>
       </Col>
         <Col span="6"  style="float:right">
       <Button type="warning" @click='GenerateCode'>生成优惠码</Button>
@@ -25,7 +25,7 @@
       </Row>
       </Form-item>
 
-      <Form-item label="价值" prop="Worth" :rules="{required: true, message: '必填,请输入优惠卷的价值', trigger:'blur',type:'number' }" >
+      <Form-item label="价值" prop="Worth" :rules="{required: true, message: '必填,请输入优惠券的价值', trigger:'blur',type:'number' }" >
          <InputNumber :max="999" :min="1" v-model="modalForm.Worth"></InputNumber>元
       </Form-item>
       <Form-item  label="满几小时可用" prop="StartHour"  :rules="{required: true, message: '必填,最小1小时，最大10小时', trigger:'blur',type:'number' }" >
@@ -54,7 +54,7 @@
         <Input v-model="modalForm.OwenPhone" ></Input>
       </Form-item>
  <Form-item  label="备注"    >
-        <Input v-model="modalForm.Remark"  type="textarea"  :rows="2" maxlength="200" ></Input>
+        <Input v-model="modalForm.Remark"  type="textarea" placeholder="最多输入50字。" :rows="2" maxlength="50" ></Input>
       </Form-item>
     </Form>
     <div slot="footer">
@@ -137,7 +137,7 @@ export default {
             debugger;
             try{
               let result;
-              if (this.modalFormTitle ==='添加优惠卷'){
+              if (this.modalFormTitle ==='添加优惠券'){
                  result = await addExamRateCode(params);
               }else{
                  result = await editExamRateCode(params);
