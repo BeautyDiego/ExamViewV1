@@ -237,6 +237,7 @@
         this.total = res.total;
         this.tableData = res.rows;
         this.tableLoading=false;
+        console.log( this.tableData )
       },
       changeCurrentPage(num){
         this.currentPage=num;
@@ -250,8 +251,11 @@
       },
       editRate(row){
         this.parentForm=JSON.parse(JSON.stringify(row));
+          this.parentForm.StartDate= new Date(row.StartDate);
+          this.parentForm.EndDate= new Date(row.EndDate);
         this.formTitle='修改优惠券';
         this.formShow=true;
+
       },
 
       hideModel(){

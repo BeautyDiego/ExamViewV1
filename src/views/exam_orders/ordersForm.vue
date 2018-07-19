@@ -83,7 +83,7 @@
               <Row class="setting-row"><Col span="12" class="setting-title">每个小时单价：</Col><Col span="12">￥{{modalForm.CostPerHour}}元</Col></Row>
               <Row class="setting-row"><Col span="12" class="setting-title">单个钟优惠：</Col><Col span="12">￥{{expense.HourTotalDiscount}}元</Col></Row>
               <Row class="setting-row" v-if="!IsCoachSource"><Col span="12" class="setting-title">优惠券优惠：</Col><Col span="12">￥{{rateCode.Worth}}</Col></Row>
-              <Row class="setting-row"><Col span="12" class="setting-title">应收金额：</Col><Col span="12">￥{{orderOriginAmount}}元</Col></Row>
+              <Row class="setting-row"><Col span="12" class="setting-title">总金额：</Col><Col span="12">￥{{orderOriginAmount}}元</Col></Row>
               <Row style="font-size:28px;color:#ea6219;">￥{{orderOriginAmount-saveMoney}}</Row>
               <Row style="font-size:18px;color:#47b348;">省￥{{saveMoney}}</Row>
             </div>
@@ -337,7 +337,6 @@ export default {
         }
       },
       async saveForm() {
-
             this.modalForm_loading=true;
             try{
               let result;
@@ -362,6 +361,7 @@ export default {
                           this.TotalDiscount=this.saveMoney; // 总的优惠的价格
                           this.TotalShoolDiscount=this.schoolSaveMoney; // 驾校优惠的价格
                       }else{
+                          this.modalForm.StandardCost = this.expense.StandardCost;
                           this.modalForm.BasicCost = this.expense.BasicCost;
                           this.modalForm.TotalCost = this.orderOriginAmount-this.saveMoney;
                           this.modalForm.HourTotalDiscount = this.expense.HourTotalDiscount;

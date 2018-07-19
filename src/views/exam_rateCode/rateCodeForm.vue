@@ -74,13 +74,17 @@ export default {
         type: Object,
         default: function () {
           return {
-            Id:'',
-            UserName: '',
-            LoginName: '',
-            Pwd:'',
-            PhoneNum:'',
-            Mobile:'',
-            Sys_RoleId:0,
+              Id:'',
+              RateCode: '',
+              Worth: '',
+              StartHour: '',
+              StartDate: '',
+              EndDate: '',
+              Enabled: '立即生效',
+              OwenCompany: '',
+              Owener:'',
+              OwenPhone:'',
+              textarea:'',
           }
         }
       },
@@ -134,7 +138,6 @@ export default {
           if (valid) {
             this.modalForm_loading=true;
             const params = this.modalForm;
-            debugger;
             try{
               let result;
               if (this.modalFormTitle ==='添加优惠券'){
