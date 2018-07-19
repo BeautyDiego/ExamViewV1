@@ -45,15 +45,18 @@
         <Row >
           <Col span="14"  >
           <Form-item label="每小时价格：" >
-            <InputNumber v-model="modalForm.CostPerHour" :readonly="!IsCoachSource" :min="standCostMin"></InputNumber>
+            ￥<InputNumber v-model="modalForm.CostPerHour" :readonly="!IsCoachSource" :min="standCostMin"></InputNumber>元
           </Form-item>
           <Form-item label="学习时长：" >
-            <InputNumber  v-model="modalForm.ExamHour" :step="0.5" readonly='true' :min="0"></InputNumber >
+             <Select v-model="modalForm.ExamHour" style="width:100px">
+                <Option v-for="item in hourList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            </Select>小时
           </Form-item>
           <Form-item label="教练车：" >
             <Select v-model="modalForm.CarId" placeholder="请选择" @on-change="onCarChange">
               <Option v-for="item in carCombo" :value="item.Id" :key="item.Id">{{ item.CarPlate }}</Option>
             </Select>
+            
           </Form-item>
           <Form-item label="优惠码：" v-if="!IsCoachSource" >
             <Row>
@@ -96,10 +99,10 @@
             <Row class="setting-row"><Col span="12" class="setting-title">订单编号：</Col><Col span="12">{{order.OrderNum}}</Col> </Row>
             <Row class="setting-row"><Col span="12" class="setting-title">客源：</Col><Col span="12">{{order.CusType}}</Col> </Row>
             <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员姓名：</Col><Col span="12">{{order.Exam_CoachName}}</Col></Row>
-            <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员电话：</Col><Col span="12">{{order.Exam_CoachMobile}}</Col></Row>
+            <Row class="setting-row" v-if="IsCoachSource"><Col span="12" class="setting-title">教练员手机号：</Col><Col span="12">{{order.Exam_CoachMobile}}</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">车牌号：</Col><Col span="12">{{order.Exam_CarPlate}}</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">车编号：</Col><Col span="12">{{order.Exam_CarNum}}</Col></Row>
-            <Row class="setting-row"><Col span="12" class="setting-title">车类型：</Col><Col span="12">{{order.Exam_CarType}}</Col></Row>
+            <Row class="setting-row"><Col span="12" class="setting-title">车辆类型：</Col><Col span="12">{{order.Exam_CarType}}</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">学习时长：</Col><Col span="12">{{order.ExamHour}}小时</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">开始时间：</Col><Col span="12">{{order.ExamStart}}</Col></Row>
             <Row class="setting-row"><Col span="12" class="setting-title">结束时间：</Col><Col span="12">{{order.ExamEnd}}</Col></Row>
@@ -182,6 +185,48 @@ export default {
               RateCode:'',
               RateCodeWorth:'',
           },
+           hourList: [
+                    {
+                        value: '0.5',
+                        label: '0.5'
+                    },
+                    {
+                        value: '1',
+                        label: '1'
+                    },
+                    {
+                        value: '1.5',
+                        label: '1.5'
+                    },
+                    {
+                        value: '2',
+                        label: '2'
+                    },
+                    {
+                        value: '2.5',
+                        label: '2.5'
+                    },
+                    {
+                        value: '3',
+                        label: '3'
+                    },
+                     {
+                        value: '3.5',
+                        label: '3.5'
+                    },
+                     {
+                        value: '4',
+                        label: '4'
+                    },
+                    {
+                        value: '4.5',
+                        label: '4.5'
+                    },
+                    {
+                        value: '5',
+                        label: '5'
+                    }
+                ],
           modalForm_loading:false,
           currentStep:0,
           carCombo:[], // 教练车Combo
@@ -397,23 +442,23 @@ export default {
             LODOP.ADD_PRINT_TEXT(20, 10, 230, 20, "订单编号："+this.order.OrderNum);
             LODOP.ADD_PRINT_TEXT(40, 10, 230, 20, "客源："+this.order.CusType);
             if (this.IsCoachSource){
-                LODOP.ADD_PRINT_TEXT(60, 10, 230, 20, "教练员："+this.order.Exam_CoachName);
-                LODOP.ADD_PRINT_TEXT(80, 10, 230, 20, "教练手机："+this.order.Exam_CoachMobile);
-                LODOP.ADD_PRINT_TEXT(100, 10, 230, 20, "车牌："+this.order.Exam_CarPlate);
-                LODOP.ADD_PRINT_TEXT(120, 10, 230, 20, "车号："+this.order.Exam_CarNum);
-                LODOP.ADD_PRINT_TEXT(140, 10, 230, 20, "车类型："+this.order.Exam_CarType);
+                LODOP.ADD_PRINT_TEXT(60, 10, 230, 20, "教练员姓名："+this.order.Exam_CoachName);
+                LODOP.ADD_PRINT_TEXT(80, 10, 230, 20, "教练员手机号："+this.order.Exam_CoachMobile);
+                LODOP.ADD_PRINT_TEXT(100, 10, 230, 20, "车牌号："+this.order.Exam_CarPlate);
+                LODOP.ADD_PRINT_TEXT(120, 10, 230, 20, "车编号："+this.order.Exam_CarNum);
+                LODOP.ADD_PRINT_TEXT(140, 10, 230, 20, "车辆类型："+this.order.Exam_CarType);
                 LODOP.ADD_PRINT_TEXT(160, 10, 230, 20, "学习时长："+this.order.ExamHour+"小时");
                 LODOP.ADD_PRINT_TEXT(180, 10, 230, 20, "开始时间："+this.order.ExamStart);
                 LODOP.ADD_PRINT_TEXT(200, 10, 230, 20, "结束时间："+this.order.ExamEnd);
-                LODOP.ADD_PRINT_TEXT(220, 10, 230, 20, "订单金额：￥"+this.order.TotalCost);
+                LODOP.ADD_PRINT_TEXT(220, 10, 230, 20, "应收金额：￥"+this.order.TotalCost+"元");
             }else{
-                LODOP.ADD_PRINT_TEXT(60, 10, 230, 20, "车牌："+this.order.Exam_CarPlate);
-                LODOP.ADD_PRINT_TEXT(80, 10, 230, 20, "车号："+this.order.Exam_CarNum);
-                LODOP.ADD_PRINT_TEXT(100, 10, 230, 20, "车类型："+this.order.Exam_CarType);
+                LODOP.ADD_PRINT_TEXT(60, 10, 230, 20, "车牌号："+this.order.Exam_CarPlate);
+                LODOP.ADD_PRINT_TEXT(80, 10, 230, 20, "车编号："+this.order.Exam_CarNum);
+                LODOP.ADD_PRINT_TEXT(100, 10, 230, 20, "车辆类型："+this.order.Exam_CarType);
                 LODOP.ADD_PRINT_TEXT(120, 10, 230, 20, "学习时长："+this.order.ExamHour+"小时");
                 LODOP.ADD_PRINT_TEXT(140, 10, 230, 20, "开始时间："+this.order.ExamStart);
                 LODOP.ADD_PRINT_TEXT(160, 10, 230, 20, "结束时间："+this.order.ExamEnd);
-                LODOP.ADD_PRINT_TEXT(180, 10, 230, 20, "订单金额：￥"+this.order.TotalCost);
+                LODOP.ADD_PRINT_TEXT(180, 10, 230, 20, "应收金额：￥"+this.order.TotalCost+"元");
             }
 
 

@@ -97,5 +97,7 @@ module.exports = {
         'vue-router': 'VueRouter',
         'vuex': 'Vuex',
         'echarts': 'echarts',
+        'echarts': 'echarts',
+      //  'iView':'iView',
       }
 };
