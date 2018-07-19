@@ -44,13 +44,13 @@
               <Radio label="暂不生效"></Radio>
             </RadioGroup>
         </Form-item>
-      <Form-item  label="所属公司" prop="OwenCompany"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string' }" >
+      <Form-item  label="所属公司" prop="OwenCompany"  :rules="{required: true, message: '必填',min:1,max:20, trigger:'blur',type:'string' }" >
         <Input v-model="modalForm.OwenCompany" ></Input>
       </Form-item>
-      <Form-item  label="负责人" prop="Owener"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string' }" >
+      <Form-item  label="负责人" prop="Owener"  :rules="{required: true, message: '必填',min:1,max:10, trigger:'blur',type:'string' }" >
         <Input v-model="modalForm.Owener" ></Input>
       </Form-item>
-      <Form-item  label="负责人电话" prop="OwenPhone"  :rules="{required: true, message: '必填,6-16位数字或字母或-_', trigger:'blur',type:'string' }" >
+      <Form-item  label="负责人电话" prop="OwenPhone"  :rules="{required: true, message: '必填,如18628888888这样11位手机号', trigger:'blur',type:'string',pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/}" >
         <Input v-model="modalForm.OwenPhone" ></Input>
       </Form-item>
  <Form-item  label="备注"    >

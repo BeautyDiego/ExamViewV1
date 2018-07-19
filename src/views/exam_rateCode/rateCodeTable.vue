@@ -88,7 +88,7 @@
           },
           {
             align:'center',
-            title: '优惠卷编号',
+            title: '优惠券编号',
             key: 'RateCode',
           },
           {
@@ -190,7 +190,7 @@
         total:0,
         currentPage:1,
         formShow:false,
-        formTitle:'添加优惠卷',
+        formTitle:'添加优惠券',
         parentForm:{
           Id:'',
           RateCode: '',
@@ -245,12 +245,12 @@
        addRate(){
           clearObj(this.parentForm);
           this.parentForm.Enabled='立即生效';
-          this.formTitle='添加优惠卷';
+          this.formTitle='添加优惠券';
           this.formShow=true;
       },
       editRate(row){
         this.parentForm=JSON.parse(JSON.stringify(row));
-        this.formTitle='修改优惠卷';
+        this.formTitle='修改优惠券';
         this.formShow=true;
       },
 

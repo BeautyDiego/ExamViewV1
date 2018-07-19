@@ -337,11 +337,11 @@
         resetForm:{
           Id:'',
           CusType:'教练客源',
-          StartHour:1,
-          BasicCost:1,
-          StandardCost:1,
-          HourSchoolDiscout:1,
-          HourTotalDiscount:1,
+          StartHour:'',
+          BasicCost:'',
+          StandardCost:'',
+          HourSchoolDiscout:'',
+          HourTotalDiscount:'',
           Enabled:'立即生效',
           Remark:'',
         },
@@ -384,6 +384,7 @@
       },
        addExp(){
          this.parentForm=JSON.parse(JSON.stringify(this.resetForm));
+           this.parentForm.CusType = this.searchForm.cusType;
           this.formTitle='添加计费规则';
           this.formShow=true;
       },

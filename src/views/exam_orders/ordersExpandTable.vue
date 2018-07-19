@@ -5,11 +5,8 @@
 </style>
 <template>
     <div>
-        <Row class="expand-row">
-            <Col span="8">
-            <span class="expand-key"> 标准价: </span>
-            <span class="expand-value">￥{{ row.StandardCost }}</span>
-            </Col>
+        <Row v-if="row.CusType=='教练客源'" class="expand-row">
+
             <Col span="8">
             <span class="expand-key">应收金额: </span>
             <span class="expand-value">￥{{ row.TotalCost }}</span>
@@ -19,7 +16,18 @@
             <span class="expand-value">￥{{ row.BasicCost }}</span>
             </Col>
         </Row>
-        <Row class="expand-row">
+        <Row v-else class="expand-row">
+
+            <Col span="8">
+            <span class="expand-key">应收金额: </span>
+            <span class="expand-value">￥{{ row.TotalCost }}</span>
+            </Col>
+            <Col span="8">
+            <span class="expand-key">单小时总优惠: </span>
+            <span class="expand-value">￥{{ row.HourTotalDiscount }}</span>
+            </Col>
+        </Row>
+        <Row v-if="row.CusType=='教练客源'" class="expand-row">
             <Col span="8">
             <span class="expand-key">教练价格: </span>
             <span class="expand-value">￥{{ row.CoachPrice }}</span>
@@ -33,7 +41,11 @@
             <span class="expand-value">￥{{ row.HourSchoolDiscout }}</span>
             </Col>
         </Row>
-        <Row class="expand-row">
+        <Row v-if="row.CusType=='自然客源'" class="expand-row">
+            <Col span="8">
+            <span class="expand-key"> 标准价: </span>
+            <span class="expand-value">￥{{ row.StandardCost }}</span>
+            </Col>
             <Col span="8">
             <span class="expand-key">优惠码: </span>
             <span class="expand-value">{{ row.RateCode }}</span>
@@ -50,6 +62,6 @@
 export default {
     props: {
         row: Object
-    }
+    },
 }
 </script>
